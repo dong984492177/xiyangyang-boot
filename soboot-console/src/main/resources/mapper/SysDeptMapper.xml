@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.SysDeptMapper">
+
+    <select id="queryDeptList"
+            resultType="com.ywt.console.models.resmodel.systemresmodels.QueryDeptListResModel">
+        select id, parent_id parentId, ancestors, dept_name deptName, order_num orderNum, leader, phone,
+        email, is_delete isDelete, remark, create_time createTime
+        from sys_dept
+        <where>
+            <if test="null != param.id">
+                and id = #{param.id}
+            </if>
+            <if test="null != param.id">
+                and parent_id = #{param.parentId}
+            </if>
+            <if test="null != param.deptName and param.deptName != ''">
+                and dept_name like concat(#{param.deptName}, '%')
+            </if>
+            <if test="null != param.isDelete">
+                 and is_delete  = #{param.isDelete}
+            </if>
+        </where>
+        order by parent_id, order_num
+    </select>
+</mapper>

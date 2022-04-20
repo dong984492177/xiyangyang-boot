@@ -1,0 +1,43 @@
+auth:
+  filter:
+    exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
+    exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
+  password: sentinel
+  username: sentinel
+logging:
+  file: ${user.home}/logs/csp/sentinel-dashboard.log
+  level:
+    org:
+      springframework:
+        web: INFO
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+sentinel:
+  dashboard:
+    version: ${project.version}
+server:
+  port: 8088
+  servlet:
+    session:
+      cookie:
+        name: sentinel_dashboard_cookie
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  application:
+    name: sentinel
+  cloud:
+      nacos:
+        username: nacos
+        password: Nacos2020
+        discovery:
+          server-addr: 172.16.1.154:8848
+        config:
+          server-addr: 172.16.1.154:8848
+          file-extension: yaml
+          group: DEFAULT_GROUP
+          namespace: 45d472e5-e75d-4a0a-a15d-28ea9af98e80
+          prefix: application

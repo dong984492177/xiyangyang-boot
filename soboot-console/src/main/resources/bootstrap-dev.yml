@@ -1,0 +1,34 @@
+server:
+  port: 8000
+dubbo:
+  registry:
+    address: spring-cloud://localhost:8848
+  cloud:
+    subscribed-services:
+  consumer:
+    timeout: 60000
+spring:
+  application:
+    name: 4`
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        #prefix: application
+        file-extension: yaml
+        group: @profiles.active@
+        namespace: @profiles.active@-soboot
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+    com:
+      alibaba:
+        nacos: error

@@ -1,0 +1,73 @@
+spring:
+  redis:
+    host: 172.16.7.87
+    db: 0
+    port: 6379
+    timeout: 600ms
+    password: 123456
+    poolsize: 64
+  cloud:
+    sentinel:
+      transport:
+      dashboard: 172.16.7.87:8090
+      port: 8719
+      datasource:
+        ds-flow:
+          nacos:
+            server-addr: 172.16.7.87:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: DEFAULT_GROUP
+            dataType: json
+            rule-type: flow
+        ds-param:
+          nacos:
+            server-addr: 172.16.7.87:8848
+            dataId: ${spring.application.name}-param-rules
+            groupId: DEFAULT_GROUP
+            dataType: json
+            rule-type: param-flow
+        ds-degrade:
+          nacos:
+            server-addr: 172.16.7.87:8848
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: DEFAULT_GROUP
+            dataType: json
+            rule-type: degrade
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: websocket-route
+          uri: lb:ws://ywt-console
+          predicates:
+            - Path=/webSocket/**
+        - id: console-route
+          uri: http://172.16.7.87:8000
+          predicates:
+            - Path=/console/**
+          filters:
+            - StripPrefix=1
+        - id: hotel-route
+          uri: lb://biz-hotel
+          predicates:
+            - Path=/hotel/**
+          filters:
+            - StripPrefix=1
+        - id: ctl-route
+          uri: http://172.16.7.87:8100
+          predicates:
+            - Path=/ctl/**
+          filters:
+            - StripPrefix=1
+        - id: kunlun-route
+          uri: http://172.16.7.87:8300
+          predicates:
+            - Path=/kunlun/**
+reactor:
+  netty:
+    worker-count: 50

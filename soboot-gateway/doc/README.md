@@ -1,0 +1,3 @@
+Sgm8ayWwIw.txt 雅思特生产环境小程序验证文件
+tdPhfykTBk.txt 雅思特qa环境小程序验证文件
+MP_verify_mTDRxvjL52n9aAMz.txt 携住智选公众号验证文件

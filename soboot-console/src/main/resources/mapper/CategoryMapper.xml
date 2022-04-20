@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.CategoryMapper">
+
+    <sql id="categorySQL">
+        id, category_key categoryKey, category_code categoryCode, category_name categoryName, alias_name aliasName, create_time createTime
+    </sql>
+
+    <sql id="categorySQLAlis">
+        a.id, a.category_key categoryKey, a.category_code categoryCode, a.category_name categoryName, a.alias_name aliasName, a.create_time createTime
+    </sql>
+
+    <select id="queryCategory" resultType="com.ywt.console.models.resmodel.QueryCategoryResModel">
+        select <include refid="categorySQL"/>
+        from category
+        <where>
+            <if test="null != param.id ">
+                and id = #{param.id}
+            </if>
+            <if test="null != param.categoryKey and param.categoryKey != '' ">
+                and category_key = #{param.categoryKey}
+            </if>
+            <if test="null != param.categoryCode and param.categoryCode != '' ">
+                and category_code = #{param.categoryCode}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+    <select id="queryAllCategorys" resultType="com.ywt.console.models.resmodel.QueryCategoryResModel">
+        select
+        <include refid="categorySQLAlis"/>,b.product_line as productLine
+        from category a
+        left join product b on b.category_key = a.category_key
+        where a.is_delete = 0
+    </select>
+
+    <select id="queryCategoryByType" resultType="com.ywt.console.entity.Category">
+        select <include refid="categorySQL"/>
+        from category
+        where category_key = #{param.categoryKey} and is_delete = 0
+    </select>
+</mapper>

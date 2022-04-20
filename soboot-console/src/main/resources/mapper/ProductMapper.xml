@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.ProductMapper">
+
+    <sql id="productSQL">
+        id, category_key categoryKey, name, product_model productModel, manufacturer,
+        product_line productLine, remark, create_time createTime
+     </sql>
+
+    <select id="queryProduct" resultType="com.ywt.console.models.resmodel.QueryProductResModel">
+        select <include refid="productSQL"/>
+        from product
+        <where>
+            <if test="null != param.id ">
+                and id = #{param.id}
+            </if>
+            <if test="null != param.categoryKey and param.categoryKey != '' ">
+                and category_key = #{param.categoryKey}
+            </if>
+            <if test="null != param.name and param.name != '' ">
+                and name = #{param.name}
+            </if>
+            <if test="null != param.productModel and param.productModel != '' ">
+                and product_model = #{param.productModel}
+            </if>
+            <if test="null != param.productLine and param.productLine != '' ">
+                and product_line = #{param.productLine}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+    <select id="queryProductByKey" resultType="com.ywt.console.entity.Product">
+        select <include refid="productSQL"/>
+        from product
+        <where>
+            <if test="null != categoryKey and categoryKey != '' ">
+                and product_model = #{categoryKey}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+    <select id="findList" resultType="com.ywt.console.entity.Product">
+        select <include refid="productSQL"/>
+        from product
+        where is_delete = 0
+    </select>
+</mapper>

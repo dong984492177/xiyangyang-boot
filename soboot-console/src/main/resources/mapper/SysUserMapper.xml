@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.SysUserMapper">
+
+    <resultMap id="userListMap" type="com.ywt.console.models.resmodel.systemresmodels.QueryUserListResModel">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phonenumber" column="phonenumber"/>
+        <result property="gender" column="gender"/>
+        <result property="avatar" column="avatar"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="isLock" column="is_lock"/>
+        <result property="createTime" column="create_time"/>
+        <result property="roleName" column="role_name"/>
+        <result property="isDeptAdmin" column="is_dept_admin"/>
+        <result property="isQueryAllHotel" column="is_query_all_hotel"/>
+        <result property="deleteTime" column="delete_time"/>
+        <association property="dept" column="dept_id" select="com.ywt.console.mapper.SysDeptMapper.selectById"/>
+    </resultMap>
+
+    <select id="queryUserList" resultMap="userListMap">
+        select u.id, u.user_name, u.nick_name, u.email, u.phonenumber, u.gender,u.avatar, u.is_delete, u.create_time, u.dept_id,u.is_lock,r.role_name
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.id
+        left join sys_user_role s on u.id = s.user_id
+        left join  sys_role r on r.id = s.role_id
+        <where>
+            <if test="param.userName != null and param.userName != ''">
+                AND u.user_name like concat(#{param.userName}, '%')
+            </if>
+            <!--<if test="param.isDelete != null">-->
+                <!--AND u.is_delete = #{param.isDelete}-->
+            <!--</if>-->
+            <if test="param.phonenumber != null and param.phonenumber != ''">
+                AND u.phonenumber like concat(#{param.phonenumber}, '%')
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{param.beginTime},'%y%m%d')
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                AND date_format(u.create_time,'%y%m%d') &lt;= date_format(#{param.endTime},'%y%m%d')
+            </if>
+            <if test="param.deptId != null">
+                AND (u.dept_id = #{param.deptId} OR u.dept_id IN ( SELECT t.id FROM sys_dept t WHERE FIND_IN_SET (#{param.deptId},t.ancestors) ))
+            </if>
+        </where>
+    </select>
+
+    <select id="querySysUser" resultType="com.ywt.console.models.resmodel.systemresmodels.QueryUserListResModel">
+        select user_name userName, phonenumber, `password` from sys_user
+        where (user_name = #{account} or phonenumber = #{account}) and `password` = #{password} and is_delete = 0
+    </select>
+</mapper>

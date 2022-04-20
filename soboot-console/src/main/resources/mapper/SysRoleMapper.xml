@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.SysRoleMapper">
+
+    <sql id="roleSQL">
+        id, role_name roleName, role_key roleKey, role_sort roleSort, agent, is_delete isDelete, remark, create_time createTime
+    </sql>
+    <select id="getRoleList"
+            resultType="com.ywt.console.models.resmodel.systemresmodels.QueryRoleListResModel">
+        select <include refid="roleSQL"/>
+        from sys_role
+        <where>
+            <if test="null != param.roleName and param.roleName != ''">
+                and role_name like concat(#{param.roleName}, '%')
+            </if>
+            <if test="null != param.roleKey and param.roleKey != ''">
+                and role_key like concat(#{param.roleKey}, '%')
+            </if>
+            <if test="null != param.isDelete and param.isDelete != ''">
+                and is_delete = #{param.isDelete}
+            </if>
+            <if test="null != param.beginTime and param.beginTime != ''">
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{param.beginTime},'%y%m%d')
+            </if>
+            <if test="null != param.endTime and param.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{param.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by role_sort
+    </select>
+    <select id="selectRoleByUserId" resultType="com.ywt.console.entity.SysRole">
+        select r.id, r.role_key roleKey, r.role_name roleName
+        from sys_role r
+        left join sys_user_role ur on r.id = ur.role_id
+        where ur.user_id = #{userId} and r.is_delete = 0
+    </select>
+</mapper>

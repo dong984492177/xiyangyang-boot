@@ -1,0 +1,28 @@
+server:
+  port: 8001
+dubbo:
+  scan:
+    base-packages: com.ywt.message.api.service
+  protocol:
+    name: dubbo
+    port: 28000
+  cloud:
+    subscribed-services:
+  registry:
+    address: spring-cloud://172.16.7.87:8848
+    subscribe: false
+spring:
+  application:
+    name: message
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 172.16.7.87:8848
+      config:
+        server-addr: 172.16.7.87:8848
+        prefix: application
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        namespace: f42f703d-61be-4e40-8470-998d368b47dd

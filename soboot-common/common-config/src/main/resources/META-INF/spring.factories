@@ -1,0 +1,6 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ywt.common.config.redis.RedissonAutoConfiguration,\
+com.ywt.common.config.mq.MQConsumerConfiguration,\
+com.ywt.common.config.mq.MQProducerConfiguration,\
+com.ywt.common.config.oss.AliyunOSSClientAutoConfiguration

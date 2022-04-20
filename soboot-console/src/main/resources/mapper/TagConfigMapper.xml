@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywt.console.mapper.TagConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.ywt.console.entity.TagConfig" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_id as categoryId, tag_name as tagName, remark, is_delete as isDelete, delete_time as deleteTime, create_time as createTime, create_by as createBy,
+    update_time as updateTime, update_by as updateBy
+  </sql>
+  <sql id="Base_Column_List_Alis" >
+    a.id, a.category_id as categoryId, a.tag_name as tagName, a.remark, a.is_delete as isDelete, a.delete_time as deleteTime, a.create_time as createTime, a.create_by as createBy,
+    a.update_time as updateTime, a.update_by as updateBy
+  </sql>
+  <select id="selectById" resultType="com.ywt.console.entity.TagConfig" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List_Alis" />
+    from tag_config a
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from tag_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertTagConfig" parameterType="com.ywt.console.entity.TagConfig">
+    insert into tag_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="tagName != null" >
+        tag_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="tagName != null" >
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateTagConfig" parameterType="com.ywt.console.entity.TagConfig" >
+    update tag_config
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="tagName != null" >
+        tag_name = #{tagName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getList" parameterType="com.ywt.console.models.reqmodel.QueryTagConfigReqModel"
+          resultType="com.ywt.console.models.resmodel.QueryTagConfigResModel">
+    select
+    <include refid="Base_Column_List_Alis" />,b.category_name as categoryName,b.category_key as categoryKey
+    from tag_config a
+    left join category b on a.category_id = b.id
+    <where>
+      <if test="param.tagName != null and param.tagName !=''" >
+        and a.tag_name like concat(concat('%',#{param.tagName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="param.categoryId != null and param.categoryId !=''" >
+        and a.category_id = #{param.categoryId}
+      </if>
+      and a.is_delete =0
+      and b.is_delete =0
+    </where>
+  </select>
+
+  <update id="updateTagConfigBatch" parameterType="java.util.List">
+    update tag_config
+    set is_delete =1,delete_time = now()
+    where  id in
+    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </update>
+
+  <select id="findList" parameterType="com.ywt.console.models.reqmodel.QueryTagConfigReqModel"
+            resultType="com.ywt.console.models.resmodel.QueryTagConfigResModel">
+        select
+        <include refid="Base_Column_List_Alis" />,b.category_name as categoryName,b.category_key as categoryKey
+        from tag_config a
+        left join category b on a.category_id = b.id
+        where  a.is_delete =0 and b.is_delete =0
+
+  </select>
+
+  <select id="findListExclude" parameterType="java.lang.String"
+          resultType="com.ywt.console.models.resmodel.QueryTagConfigResModel">
+    select
+    <include refid="Base_Column_List_Alis" />,b.category_name as categoryName,b.category_key as categoryKey
+    from tag_config a
+    left join category b on a.category_id = b.id
+    <where>
+        and a.is_delete =0 and b.is_delete =0
+        <if test="param!= null and param!=''" >
+            and b.category_key not like concat(#{param},'%')
+        </if>
+    </where>
+  </select>
+
+  <select id="findListNewBee" parameterType="java.lang.String"
+          resultType="com.ywt.console.models.resmodel.QueryTagConfigResModel">
+    select
+    <include refid="Base_Column_List_Alis" />,b.category_name as categoryName,b.category_key as categoryKey
+    from tag_config a
+    left join category b on a.category_id = b.id
+    <where>
+      and a.is_delete =0 and b.is_delete =0
+      <if test="param!= null and param!=''" >
+        and b.category_key like concat(#{param},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="queryByIds" resultType="java.lang.String">
+    select tag_name
+    from tag_config
+    <where>
+      and is_delete = 0
+      <if test="null != list and list.size()>0">
+        and id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="queryHotelTagList" parameterType="com.ywt.console.models.reqmodel.QueryTagConfigReqModel"
+          resultType="com.ywt.console.models.resmodel.QueryTagResModel">
+    select DISTINCT t2.id, t1.hotelId, t2.category_id categoryId,
+    t1.tagName, t1.category_key categoryKey, t1.category_name categoryName from
+    (
+    select d.id deviceId, d.hotel_id hotelId, IFNULL(dp.tag_name,d.tag_name) tagName,
+    c.id categoryId, c.category_key, c.category_name from  (select e.* from device e where e.hotel_id = #{param.hotelId} and e.is_delete = 0)
+    d
+    left join device_port dp on d.id=dp.device_id
+    left join product p on d.product_id=p.id
+    left join category c on p.category_key=c.category_key
+    ) t1
+    inner join (select * from tag_config where is_delete=0) t2 on t1.tagName=t2.tag_name and t1.categoryId=t2.category_id
+    order by tagName;
+  </select>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.ProductServiceMapper">
+
+    <sql id="serviceSQL">
+        id, product_id productId, service_name serviceName, service_code serviceCode, service_value serviceValue,service_type serviceType, remark, create_time createTime
+    </sql>
+
+    <select id="queryProductService"
+            resultType="com.ywt.console.models.resmodel.QueryProductServiceResModel">
+        select ps.id, ps.product_id productId, ps.service_name serviceName, ps.service_code serviceCode, ps.service_value serviceValue,ps.service_type serviceType, ps.remark, ps.create_time createTime,
+        p.name productName,p.product_line productLine
+        from product_service ps
+        inner join product p on ps.product_id = p.id
+        <where>
+            <if test="null != param.id ">
+                and ps.id = #{param.id}
+            </if>
+            <if test="null != param.productId and param.productId != '' ">
+                and ps.product_id = #{param.productId}
+            </if>
+            <if test="null != param.serviceName and param.serviceName != '' ">
+                and ps.service_name = #{param.serviceName}
+            </if>
+            <if test="null != param.categoryKey and param.categoryKey != '' ">
+                and p.category_key = #{param.categoryKey}
+            </if>
+            <if test="null != param.productLine and param.productLine != '' ">
+                and p.product_line = #{param.productLine}
+            </if>
+            and ps.is_delete = 0 and p.is_delete = 0
+        </where>
+    </select>
+
+    <select id="queryByProductAndCommand"
+            resultType="com.ywt.console.models.resmodel.QueryProductServiceResModel">
+        select <include refid="serviceSQL"/> from  product_service
+        <where>
+            <if test="productId!=null">
+                and product_id =#{productId}
+            </if>
+            <if test="command!=null and command!=''">
+                and service_code = #{command}
+            </if>
+            <if test="value!=null and value!=''">
+                and service_value = #{value}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+    <select id="queryById" resultType="com.ywt.console.entity.ProductService">
+        select id,service_code,service_value from product_service
+        where id=#{id} and is_delete=0
+    </select>
+</mapper>

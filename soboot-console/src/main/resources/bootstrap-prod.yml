@@ -1,0 +1,37 @@
+server:
+  port: 8000
+dubbo:
+  registry:
+    address: spring-cloud://172.16.1.154:8848
+  cloud:
+    subscribed-services: yuquan-hotel,yuquan-ctl,message
+  consumer:
+    timeout: 60000
+spring:
+  application:
+    name: yuquan-console
+  cloud:
+    nacos:
+      username: nacos
+      password: Nacos2020
+      discovery:
+        server-addr: 172.16.1.154:8848
+      config:
+        server-addr: 172.16.1.154:8848
+        prefix: application
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        namespace: 0084a84d-3ad5-496b-8e88-4d58add219dc
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+    com:
+      alibaba:
+        nacos: error
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

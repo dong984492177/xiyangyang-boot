@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.TagMapper">
+
+    <select id="queryTag" resultType="com.ywt.console.models.resmodel.QueryTagResModel">
+        select
+        t.id,t.tag_name tagName,c.category_name categoryName,t.remark,t.create_time,t.hotel_id as hotelId, c.id as categoryId,
+        c.category_key categoryKey
+        from tag t
+        left join category c on t.category_id = c.id
+        <where>
+            <if test="query.tagName!=null and query.tagName!=''">
+                and t.tag_name like concat('%', concat(#{query.tagName},'%'))
+            </if>
+            <if test="query.categoryKey!=null and query.categoryKey!=''">
+                and c.category_key = #{query.categoryKey}
+            </if>
+            <if test="query.hotelId !=null and query.hotelId != 0">
+                and t.hotel_id = #{query.hotelId}
+            </if>
+            and t.is_delete = 0
+        </where>
+    </select>
+</mapper>

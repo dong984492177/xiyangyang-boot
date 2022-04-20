@@ -1,0 +1,47 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  aop:
+    auto: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://172.16.7.87:3306/xiot_yuquan_ctl?useAffectedRows=false&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: hhh123
+  redis:
+    host: http://172.16.7.87
+    database: 0
+    port: 6379
+    timeout: 600ms
+    password:
+    poolsize: 64
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 200MB
+#配置rocketmq
+rocketmq:
+  isEnabled: true
+  namesrvAddr: http://172.16.7.87:9876;
+  producerMaxMessageSize: 4096
+  producerSendMsgTimeout: 3000
+  producerRetryTimesWhenSendFailed: 2
+  producerCompressMsgBodyOverHowmuch: 2048
+  consumerConsumeThreadMin: 5
+  consumerConsumeThreadMax: 32
+  consumerConsumeMessageBatchMaxSize: 1
+mybatis-plus:
+  config-location: classpath:mapper/*.xml
+oss:
+  aliyun:
+    isEnable: true
+    bucketName: newplatform-dev
+    endPoint: oss-cn-shanghai.aliyuncs.com
+    accessDomain: newplatform-dev.oss-cn-shanghai.aliyuncs.com
+    firmwareFolder: firmware

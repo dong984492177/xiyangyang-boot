@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.SysMenuMapper">
+
+    <sql id="menuListSQL">
+        sm.id, sm.menu_name menuName, sm.parent_id parentId, sm.order_num orderNum, sm.path,
+        sm.component_url componentUrl, sm.perms, sm.is_frame isFrame, sm.visible, sm.is_delete isDelete, sm.menu_type menuType, sm.icon, sm.create_time createTime
+    </sql>
+
+    <select id="getMenuListByUserId"
+            resultType="com.ywt.console.models.resmodel.systemresmodels.QueryMenuListResModel">
+        select
+        <include refid="menuListSQL"/>
+        from sys_menu sm
+        left join sys_role_menu srm on sm.id = srm.menu_id
+        left join sys_user_role sur on srm.role_id = sur.role_id
+        where sur.user_id = #{param.userId}
+        <if test="param.menuName != null and param.menuName != ''">
+            AND sm.menu_name like concat(#{param.menuName}, '%')
+        </if>
+        <if test="param.visible != null and param.visible != ''">
+            AND sm.visible = #{param.visible}
+        </if>
+        <if test="param.isDelete != null and param.isDelete != ''">
+            AND sm.is_delete = #{param.isDelete}
+        </if>
+        <if test="param.parentId != null">
+            AND sm.parent_id = #{param.parentId}
+        </if>
+        group by sm.id
+        order by sm.parent_id, sm.order_num
+    </select>
+    <select id="getMenuList"
+            resultType="com.ywt.console.models.resmodel.systemresmodels.QueryMenuListResModel">
+        select
+        <include refid="menuListSQL"/>
+        from sys_menu sm
+        left join sys_role_menu srm on sm.id = srm.menu_id
+        left join sys_user_role sur on srm.role_id = sur.role_id
+        <where>
+            <if test="param.menuName != null and param.menuName != ''">
+                AND sm.menu_name like concat(#{param.menuName}, '%')
+            </if>
+            <if test="param.visible != null and param.visible != ''">
+                AND sm.visible = #{param.visible}
+            </if>
+            <if test="param.isDelete != null and param.isDelete != ''">
+                AND sm.is_delete = #{param.isDelete}
+            </if>
+            <if test="null != param.parentId ">
+                AND sm.parent_id = #{param.parentId}
+            </if>
+        </where>
+        group by sm.id
+        order by sm.parent_id, sm.order_num
+    </select>
+    <select id="getMenuByUserIdAndParentId" resultType="com.ywt.console.entity.SysMenu">
+        select
+        <include refid="menuListSQL"/>
+        from sys_user_role sur
+        left join sys_role_menu srm on sur.role_id = srm.role_id
+        left join sys_menu sm on srm.menu_id = sm.id
+        where sm.parent_id = #{parentId}
+        <if test="null != userId">
+            AND sur.user_id = #{userId}
+        </if>
+        group by sm.id
+        order by order_num
+    </select>
+    <select id="getCheckKeys" resultType="java.lang.Integer">
+        SELECT rm.menu_id
+        FROM sys_role_menu rm
+        WHERE rm.role_id = #{roleId}
+        AND rm.menu_id NOT IN ( SELECT m.parent_id FROM sys_menu m INNER JOIN sys_role_menu rm ON m.id = rm.menu_id AND rm.role_id = #{roleId} )
+    </select>
+</mapper>

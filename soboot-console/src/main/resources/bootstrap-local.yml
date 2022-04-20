@@ -1,0 +1,42 @@
+server:
+  port: 8000
+dubbo:
+  registry:
+    address: spring-cloud://172.16.7.87:8848
+    #address: spring-cloud://192.168.0.103:8848
+  cloud:
+    subscribed-services: message
+  consumer:
+    timeout: 60000
+spring:
+  application:
+    name: ywt-console
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 172.16.7.87:8848
+        #server-addr: 192.168.0.103:8848
+      config:
+        server-addr: 172.16.7.87:8848
+        #server-addr: 192.168.0.103:8848
+        prefix: application
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        namespace: 047d441d-6ec9-4b3b-931b-a72e6b656ded
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+    com:
+      alibaba:
+        nacos: error
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

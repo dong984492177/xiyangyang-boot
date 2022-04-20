@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ywt.console.mapper.LoginLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ywt.console.entity.log.LoginLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="target_id" property="targetId" jdbcType="VARCHAR" />
+    <result column="target_value" property="targetValue" jdbcType="VARCHAR" />
+    <result column="remote_addr" property="remoteAddr" jdbcType="VARCHAR" />
+    <result column="user_agent" property="userAgent" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="login_status" property="loginStatus" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, target_id, target_value, remote_addr, user_agent, origin, login_status,
+    create_time
+  </sql>
+
+  <select id="findList" resultType="com.ywt.console.models.resmodel.QueryLoginLogResModel">
+    select <include refid="Base_Column_List"/>
+    from sys_login_log
+    <where>
+      <if test="param.startTime!=null">
+        and create_time &gt; #{param.startTime}
+      </if>
+      <if test="param.endTime!=null">
+        and create_time &lt; #{param.endTime}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

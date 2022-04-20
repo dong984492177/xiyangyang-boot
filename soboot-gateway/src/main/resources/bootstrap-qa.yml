@@ -1,0 +1,30 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      username: nacos
+      password: Nacos2020
+      discovery:
+        server-addr: 172.16.1.148:8848
+      config:
+        server-addr: 172.16.1.148:8848
+        prefix: application
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        namespace: 45d472e5-e75d-4a0a-a15d-28ea9af98e80
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+    com:
+      alibaba:
+        nacos: error
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
