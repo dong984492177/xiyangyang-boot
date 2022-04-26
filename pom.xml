@@ -16,7 +16,7 @@
         <module>soboot-gateway</module>
         <module>soboot-message</module>
         <module>soboot-console</module>
-        <module>soboot-doc</module>
+        <!--<module>soboot-doc</module>-->
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -210,7 +210,7 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
-                <optional>true</optional>
+                <!--<optional>true</optional>-->
             </dependency>
 
             <!-- 分页 -->
