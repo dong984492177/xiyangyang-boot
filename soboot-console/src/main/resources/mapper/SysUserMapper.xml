@@ -15,7 +15,6 @@
         <result property="createTime" column="create_time"/>
         <result property="roleName" column="role_name"/>
         <result property="isDeptAdmin" column="is_dept_admin"/>
-        <result property="isQueryAllHotel" column="is_query_all_hotel"/>
         <result property="deleteTime" column="delete_time"/>
         <association property="dept" column="dept_id" select="com.ywt.console.mapper.SysDeptMapper.selectById"/>
     </resultMap>

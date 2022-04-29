@@ -9,7 +9,7 @@ dubbo:
     timeout: 60000
 spring:
   application:
-    name: 4`
+    name: soboot-console
   cloud:
     nacos:
       username: nacos
