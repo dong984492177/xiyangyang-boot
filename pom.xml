@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ywt</groupId>
-    <artifactId>ywt-pom</artifactId>
+    <artifactId>soboot-pom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ywt-pom</name>
+    <name>soboot-pom</name>
     <description> new platform of pom</description>
 
     <packaging>pom</packaging>
 
-    <modules>
+   <modules>
         <module>soboot-common</module>
         <module>soboot-gateway</module>
         <module>soboot-message</module>
@@ -55,7 +55,7 @@
         <dozer.version>5.5.1</dozer.version>
         <dozer.jdk8.support.version>1.0.3</dozer.jdk8.support.version>
         <serlvet.version>4.0.1</serlvet.version>
-        <pagehelper.version>1.2.13</pagehelper.version>
+        <pagehelper.version>1.2.3</pagehelper.version>
         <commons.collection4.version>4.4</commons.collection4.version>
         <alipay-sdk-java.version>4.10.0.ALL</alipay-sdk-java.version>
         <wxpay-sdk.version>0.0.3</wxpay-sdk.version>
@@ -158,11 +158,11 @@
             </dependency>
 
             <!--  分库框架 -->
-            <dependency>
+           <!-- <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${shardingsphere.version}</version>
-            </dependency>
+            </dependency>-->
 
             <!--  mybaits plus 持久化框架 -->
             <dependency>
@@ -478,20 +478,20 @@
         </plugins>
     </build>
 
-<!--
+
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>nexus-releases</name>
-            <url>http://nexus.kuaizhu.com/repository/maven-releases/</url>
+            <url>http://maven.66yi.cn:17407/repository/nexus-releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>nexus-snapshots</name>
-            <url>http://nexus.kuaizhu.com/repository/maven-snapshots/</url>
+            <url>http://maven.66yi.cn:17407/repository/nexus-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
--->
+
 
     <profiles>
         <profile>

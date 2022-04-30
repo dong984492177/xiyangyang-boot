@@ -15,8 +15,9 @@
 
     <parent>
         <groupId>com.ywt</groupId>
-        <artifactId>ywt-pom</artifactId>
+        <artifactId>soboot-pom</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <artifactId>soboot-common</artifactId>
