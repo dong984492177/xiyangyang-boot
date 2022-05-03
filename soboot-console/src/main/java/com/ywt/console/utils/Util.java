@@ -5,7 +5,10 @@ import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.response.DefaultResponseDataWrapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -53,5 +56,14 @@ public class Util {
 
     public static String getRouterKey(Integer userId) {
         return userId == 1 ?  XiotConstant.JWT_ROUTERS + ":ADMIN" : XiotConstant.JWT_ROUTERS + ":" + userId;
+    }
+
+    /**
+     * 获取response
+     * @return
+     */
+    public static HttpServletResponse getResponse(){
+        HttpServletResponse response =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        return response;
     }
 }

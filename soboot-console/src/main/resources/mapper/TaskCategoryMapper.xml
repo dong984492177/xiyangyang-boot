@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywt.console.mapper.TaskCategoryMapper">
+
+    <sql id="taskSQL">
+        id, name, parent_id, sort, status,create_time createTime
+    </sql>
+
+    <select id="findList" resultType="com.ywt.console.models.resmodel.TaskCategoryResModel">
+        select <include refid="taskSQL"/>
+        from t_task_category
+        <where>
+            <if test="null != param.id ">
+                and id = #{param.id}
+            </if>
+            <if test="null != param.name and param.name != '' ">
+                and name = #{param.name}
+            </if>
+            <if test="null != param.status and param.status != '' ">
+                and status = #{param.status}
+            </if>
+        </where>
+    </select>
+</mapper>
