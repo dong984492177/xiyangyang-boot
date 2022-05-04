@@ -6,6 +6,8 @@ import com.ywt.common.base.util.BeanMapping;
 import com.ywt.common.base.util.BeanUtils;
 import com.ywt.common.base.util.StringUtils;
 import com.ywt.common.response.DefaultResponseDataWrapper;
+import com.ywt.console.entity.activiti.ActDeployment;
+import com.ywt.console.mapper.ActDeploymentMapper;
 import com.ywt.console.models.activiti.ActivitiListReqModel;
 import com.ywt.console.models.activiti.ActivitiListResModel;
 import com.ywt.console.models.resmodel.QueryProductResModel;
@@ -23,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,6 +45,9 @@ public class ActivitiBizService {
 
     @Autowired
     private RepositoryService repositoryService;
+
+    @Autowired
+    private ActDeploymentMapper actDeploymentMapper;
 
     /**
      * 流程定义的激活或者挂起
@@ -99,7 +106,24 @@ public class ActivitiBizService {
             processDefinitionQuery.processDefinitionKeyLike("%" + reqModel.getKey() + "%");
         }
         List<ProcessDefinition> processDefinitions = processDefinitionQuery.listPage((reqModel.getPageNo() - 1) * reqModel.getPageSize(), reqModel.getPageSize());
-        List<ActivitiListResModel> resultList = BeanMapping.mapList(processDefinitions,ActivitiListResModel.class);
+        List<ActivitiListResModel> resultList = new ArrayList<>();
+        List<ActDeployment> actDeploymentList = actDeploymentMapper.selectByIds(processDefinitions.stream().map(ProcessDefinition::getDeploymentId).collect(Collectors.toList()));
+        Map<String,List<ActDeployment>> maps = actDeploymentList.stream().collect(Collectors.groupingBy(ActDeployment::getId));
+
+        processDefinitions.forEach(v->{
+            String deploymentId = v.getDeploymentId();
+            ActivitiListResModel resModel = ActivitiListResModel.builder()
+                    .deploymentId(deploymentId)
+                    .id(v.getId())
+                    .key(v.getKey())
+                    .name(v.getName())
+                    .resourceName(v.getResourceName())
+                    .deploymentTime(maps.get(deploymentId).get(0).getDeployTime())
+                    .version(v.getVersion())
+                    .suspendState(v.isSuspended()==true?1:0)
+                    .build();
+            resultList.add(resModel);
+        });
         iPage.setRecords(resultList);
         iPage.setTotal(count);
         return iPage;
