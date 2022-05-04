@@ -31,6 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.util.Base64Util;
 
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -472,5 +473,21 @@ public class ImageUtils {
         }
         inStream.close();
         return outStream.toByteArray();
+    }
+
+    public static MultipartFile base64ToMultipartFile(String base64) {
+        //base64编码后的图片有头信息所以要分离出来 [0]data:image/png;base64, 图片内容为索引[1]
+        String[] baseStr = base64.split(",");
+
+        //取索引为1的元素进行处理
+        byte[] b = Base64.decodeBase64(baseStr[1]);
+        for (int i = 0; i < b.length; ++i) {
+            if (b[i] < 0) {
+                b[i] += 256;
+            }
+        }
+
+        //处理过后的数据通过Base64DecodeMultipartFile转换为MultipartFile对象
+        return new Base64DecodeMultipartFile(b, baseStr[0]);
     }
 }

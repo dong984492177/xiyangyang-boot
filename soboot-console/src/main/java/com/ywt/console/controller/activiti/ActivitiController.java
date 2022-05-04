@@ -5,21 +5,22 @@ import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.controller.BaseController;
 import com.ywt.common.response.DefaultResponseDataWrapper;
 import com.ywt.console.biz.ActivitiBizService;
+import com.ywt.console.models.FileModel;
 import com.ywt.console.models.activiti.ActivitiListReqModel;
 import com.ywt.console.models.activiti.ActivitiListResModel;
-import com.ywt.console.models.reqmodel.QueryProductReqModel;
+import com.ywt.console.utils.ImageUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.ywt.console.utils.Util.parsePageModel;
@@ -31,7 +32,7 @@ import static com.ywt.console.utils.Util.parsePageModel;
  * @Create: 2022-05-03
  * @Coyright: 喜阳阳信息科技
  */
-@RestController
+@Controller
 @RequestMapping("/activiti")
 public class ActivitiController extends BaseController {
 
@@ -47,23 +48,24 @@ public class ActivitiController extends BaseController {
 
     /**
      * 导入流程
-     * @param file
+     * @param fileModel
      * @return
      */
-    @GetMapping("/importProcess")
+    @PostMapping("/importProcess")
+    @ResponseBody
     @ApiOperation(value = "导入流程文件")
-    public DefaultResponseDataWrapper importProcess(@RequestParam("file") MultipartFile file){
-
-        String fileName = file.getOriginalFilename();
+    public DefaultResponseDataWrapper importProcess(@RequestBody FileModel fileModel){
         try {
-            Deployment deployment = repositoryService.createDeployment()
+        MultipartFile file = ImageUtils.base64ToMultipartFile(fileModel.getFile());
+        String fileName = fileModel.getFileName();
+        Deployment deployment = repositoryService.createDeployment()
                     .name(fileName)
                     .addInputStream(fileName, file.getInputStream())
                     .deploy();
-            log.info("部署ID：{}" ,deployment.getId());
-            log.info("部署Name：{}" ,deployment.getName());
-            log.info("部署时间：{}" ,deployment.getDeploymentTime());
-        }catch (IOException e){
+        log.info("部署ID：{}" ,deployment.getId());
+        log.info("部署Name：{}" ,deployment.getName());
+        log.info("部署时间：{}" ,deployment.getDeploymentTime());
+        }catch (Exception e){
             log.info(e.getMessage());
         }
         return DefaultResponseDataWrapper.success();
@@ -75,6 +77,7 @@ public class ActivitiController extends BaseController {
      * @param resourceName
      */
     @GetMapping("/getProcessDefineXML")
+    @ResponseBody
     @ApiOperation(value = "获取流程定义XML")
     public void processDefineXML(@RequestParam("deploymentId") String deploymentId,@RequestParam("resourceName") String resourceName){
         activitiBizService.getProcessDefineXML(deploymentId,resourceName);
@@ -86,6 +89,7 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @DeleteMapping("/delDefinition")
+    @ResponseBody
     @ApiOperation(value = "删除流程定义")
     public DefaultResponseDataWrapper delDefinition(@PathVariable("deploymentId") String deploymentId){
         if(activitiBizService.delDefinition(deploymentId)){
@@ -101,6 +105,7 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @GetMapping("/updateStatus")
+    @ResponseBody
     @ApiOperation(value = "流程定义的激活或者挂起")
     public DefaultResponseDataWrapper startOrStop(@RequestParam("definitionId") String definitionId,@RequestParam("state") Integer state){
         activitiBizService.suspendOrActiveApply(definitionId,state);
@@ -113,6 +118,7 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @PostMapping("/list")
+    @ResponseBody
     @ApiOperation(value = "获取流程定义列表分页")
     public DefaultResponseDataWrapper<List<ActivitiListResModel>> processList(@RequestBody @ApiParam @Validated ActivitiListReqModel reqModel){
         DefaultResponseDataWrapper<List<ActivitiListResModel>> responseModel = new DefaultResponseDataWrapper<>();

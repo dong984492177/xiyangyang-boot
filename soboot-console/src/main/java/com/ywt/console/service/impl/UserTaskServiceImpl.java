@@ -20,6 +20,7 @@ import com.ywt.console.models.resmodel.TaskCategoryResModel;
 import com.ywt.console.models.resmodel.UserTaskResModel;
 import com.ywt.console.service.ITaskCategoryService;
 import com.ywt.console.service.IUserTaskService;
+import com.ywt.console.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -65,6 +66,10 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
 
     @Override
     public IPage<UserTaskResModel> queryList(UserTaskReqModel userTaskReqModel) throws ConsoleException {
+        //数据权限
+        if(!Util.isAdmin()){
+            userTaskReqModel.setCreateBy(Util.getTokenUserId().toString());
+        }
         Page<UserTaskResModel> page = new Page<>(userTaskReqModel.getPageNo(), userTaskReqModel.getPageSize());
         return mapper.findList(page, userTaskReqModel);
     }

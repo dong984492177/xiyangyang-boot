@@ -22,11 +22,11 @@ public interface ITaskCategoryService extends IService<TaskCategory> {
     /**
      * 添加/更新
      *
-     * @param updateUserTaskReqModel
+     * @param reqModel
      * @return
      * @throws Exception
      */
-    TaskCategoryResModel saveCategory(UpdateUserTaskReqModel updateUserTaskReqModel) throws ConsoleException;
+    TaskCategoryResModel saveCategory(UpdateTaskCategoryReqModel reqModel) throws ConsoleException;
 
     /**
      * 删除

@@ -36,4 +36,7 @@ public class UserTaskReqModel extends QueryModel {
 
     @ApiModelProperty(value = "任务状态")
     private String state;
+
+    @ApiModelProperty(value = "创建人",hidden = true)
+    private String createBy;
 }

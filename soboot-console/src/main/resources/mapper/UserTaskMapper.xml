@@ -3,13 +3,13 @@
 <mapper namespace="com.ywt.console.mapper.UserTaskMapper">
 
     <sql id="taskSQL">
-        id, user_name userName, task_category_id taskCategoryId, task_category_name taskCategoryName,
-        start_time startTime,end_time endTime,instance_id instanceId,state,remark
+        ut.id, ut.user_name userName, ut.task_category_id taskCategoryId, ut.task_category_name taskCategoryName,
+        ut.start_time startTime,ut.end_time endTime,ut.instance_id instanceId,ut.state,ut.remark,ut.create_time createTime
     </sql>
 
     <select id="findList" resultType="com.ywt.console.models.resmodel.UserTaskResModel">
         select <include refid="taskSQL"/>
-        from t_user_task
+        from t_user_task ut
         <where>
             <if test="null != param.taskCategoryId ">
                 and task_category_id = #{param.taskCategoryId}

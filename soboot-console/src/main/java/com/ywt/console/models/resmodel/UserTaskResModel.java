@@ -46,4 +46,7 @@ public class UserTaskResModel {
 
     @ApiModelProperty(value = "备注")
     private String remark;
+
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
 }
