@@ -25,8 +25,4 @@ public class DeleteModel {
     @ApiModelProperty(value = "ids", required = true)
     @NotNull(message = "ID不能为空")
     private List<Integer> ids;
-    /**
-     * 陌生人记录
-     */
-    private String ableStranger;
 }

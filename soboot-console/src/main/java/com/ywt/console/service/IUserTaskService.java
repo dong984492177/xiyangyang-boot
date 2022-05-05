@@ -22,11 +22,11 @@ public interface IUserTaskService extends IService<UserTask> {
     /**
      * 添加/更新
      *
-     * @param updateUserTaskReqModel
+     * @param userTask
      * @return
      * @throws Exception
      */
-    void saveTask(UpdateUserTaskReqModel updateUserTaskReqModel) throws ConsoleException;
+    boolean saveTask(UserTask userTask) throws ConsoleException;
 
     /**
      * 删除

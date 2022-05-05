@@ -2,7 +2,10 @@ package com.ywt.console.models.reqmodel;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -17,11 +20,8 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "UpdateUserTaskReqModel")
-public class UpdateUserTaskReqModel {
-
-    @ApiModelProperty(value = "id")
-    private Integer id;
+@ApiModel(value = "AddUserTaskReqModel")
+public class AddUserTaskReqModel {
 
     @ApiModelProperty(value = "状态")
     private String state;
@@ -38,6 +38,4 @@ public class UpdateUserTaskReqModel {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-
 }

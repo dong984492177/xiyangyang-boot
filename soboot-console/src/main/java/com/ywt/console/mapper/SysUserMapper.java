@@ -23,4 +23,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     IPage<QueryUserListResModel> queryUserList(@Param("page") Page<QueryUserListResModel> page, @Param("param") QueryUserListReqModel queryUserListReqModel);
 
     QueryUserListResModel querySysUser(@Param("account") String account, @Param("password") String password);
+
+    SysUser queryUserWithRole(Integer userId);
 }

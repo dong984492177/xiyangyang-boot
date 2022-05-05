@@ -7,8 +7,9 @@ import com.ywt.console.exception.ConsoleException;
 import com.ywt.console.models.DeleteModel;
 import com.ywt.console.models.reqmodel.TaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateTaskCategoryReqModel;
-import com.ywt.console.models.reqmodel.UpdateUserTaskReqModel;
 import com.ywt.console.models.resmodel.TaskCategoryResModel;
+
+import java.util.List;
 
 /**
  * @Author: huangchaoyang
@@ -38,11 +39,20 @@ public interface ITaskCategoryService extends IService<TaskCategory> {
     void delCategory(DeleteModel deleteModel) throws ConsoleException;
 
     /**
-     * 查询
+     * 查询分页
      *
      * @param taskCategoryReqModel
      * @return
      * @throws Exception
      */
-    IPage<TaskCategoryResModel> queryList(TaskCategoryReqModel taskCategoryReqModel) throws ConsoleException;
+    IPage<TaskCategoryResModel> queryListWithPage(TaskCategoryReqModel taskCategoryReqModel) throws ConsoleException;
+
+    /**
+     * 查询
+     * @param id
+     * @param parentId
+     * @return
+     * @throws Exception
+     */
+    List<TaskCategoryResModel> queryList(Integer parentId,Integer id) throws ConsoleException;
 }

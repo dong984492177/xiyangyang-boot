@@ -15,4 +15,8 @@ public class UserPhoneToken implements Serializable {
     private Integer userId;
 
     private String phone;
+
+    private String userName;
+
+    private String roleName;
 }

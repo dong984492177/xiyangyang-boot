@@ -2,14 +2,13 @@ package com.ywt.console.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ywt.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -25,9 +24,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @ApiModel(value="任务信息基础表对象", description="任务信息基础表")
+@TableName("t_user_task")
 public class UserTask extends BaseEntity {
 
     @TableId(value = "id", type = IdType.AUTO)

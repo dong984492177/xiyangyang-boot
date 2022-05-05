@@ -5,7 +5,9 @@ import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.controller.BaseController;
 import com.ywt.common.response.DefaultResponseDataWrapper;
 import com.ywt.console.biz.ActivitiBizService;
+import com.ywt.console.models.DeleteModel;
 import com.ywt.console.models.FileModel;
+import com.ywt.console.models.activiti.ActivitiHighLineResModel;
 import com.ywt.console.models.activiti.ActivitiListReqModel;
 import com.ywt.console.models.activiti.ActivitiListResModel;
 import com.ywt.console.utils.ImageUtils;
@@ -32,7 +34,7 @@ import static com.ywt.console.utils.Util.parsePageModel;
  * @Create: 2022-05-03
  * @Coyright: 喜阳阳信息科技
  */
-@Controller
+@RestController
 @RequestMapping("/activiti")
 public class ActivitiController extends BaseController {
 
@@ -47,12 +49,23 @@ public class ActivitiController extends BaseController {
     private ActivitiBizService activitiBizService;
 
     /**
+     * 流程高亮
+     * @param instanceId
+     * @return
+     */
+    @GetMapping("/getHighLine")
+    public DefaultResponseDataWrapper getHighLine(@RequestParam("instanceId") String instanceId) {
+
+        ActivitiHighLineResModel resModel = activitiBizService.getHighLine(instanceId);
+        return DefaultResponseDataWrapper.success(resModel);
+    }
+
+    /**
      * 导入流程
      * @param fileModel
      * @return
      */
     @PostMapping("/importProcess")
-    @ResponseBody
     @ApiOperation(value = "导入流程文件")
     public DefaultResponseDataWrapper importProcess(@RequestBody FileModel fileModel){
         try {
@@ -77,7 +90,6 @@ public class ActivitiController extends BaseController {
      * @param resourceName
      */
     @GetMapping("/getProcessDefineXML")
-    @ResponseBody
     @ApiOperation(value = "获取流程定义XML")
     public void processDefineXML(@RequestParam("deploymentId") String deploymentId,@RequestParam("resourceName") String resourceName){
         activitiBizService.getProcessDefineXML(deploymentId,resourceName);
@@ -85,14 +97,13 @@ public class ActivitiController extends BaseController {
 
     /**
      * 删除流程定义
-     * @param deploymentId
+     * @param idList
      * @return
      */
-    @DeleteMapping("/delDefinition")
-    @ResponseBody
+    @GetMapping("/delDefinition")
     @ApiOperation(value = "删除流程定义")
-    public DefaultResponseDataWrapper delDefinition(@PathVariable("deploymentId") String deploymentId){
-        if(activitiBizService.delDefinition(deploymentId)){
+    public DefaultResponseDataWrapper delDefinition(@RequestParam("ids") @ApiParam(value="id集合",required = true) List<String> ids ){
+        if(activitiBizService.delDefinition(ids)){
             return DefaultResponseDataWrapper.success();
         }
         return DefaultResponseDataWrapper.fail(-1,"删除流程定义失败");
@@ -105,7 +116,6 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @GetMapping("/updateStatus")
-    @ResponseBody
     @ApiOperation(value = "流程定义的激活或者挂起")
     public DefaultResponseDataWrapper startOrStop(@RequestParam("definitionId") String definitionId,@RequestParam("state") Integer state){
         activitiBizService.suspendOrActiveApply(definitionId,state);
@@ -118,7 +128,6 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @PostMapping("/list")
-    @ResponseBody
     @ApiOperation(value = "获取流程定义列表分页")
     public DefaultResponseDataWrapper<List<ActivitiListResModel>> processList(@RequestBody @ApiParam @Validated ActivitiListReqModel reqModel){
         DefaultResponseDataWrapper<List<ActivitiListResModel>> responseModel = new DefaultResponseDataWrapper<>();

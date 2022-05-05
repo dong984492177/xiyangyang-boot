@@ -12,6 +12,7 @@ import com.ywt.console.exception.ConsoleException;
 import com.ywt.console.mapper.TaskCategoryMapper;
 import com.ywt.console.mapper.UserTaskMapper;
 import com.ywt.console.models.DeleteModel;
+import com.ywt.console.models.UserPhoneToken;
 import com.ywt.console.models.reqmodel.TaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateTaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateUserTaskReqModel;
@@ -42,13 +43,17 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
     @Autowired
     private UserTaskMapper mapper;
 
-    @Override
-    public void saveTask(UpdateUserTaskReqModel updateUserTaskReqModel) throws ConsoleException {
+    @Autowired
+    private ITaskCategoryService taskCategoryService;
 
-        UpdateWrapper<UserTask> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id",updateUserTaskReqModel.getId());
-        wrapper.set("state",updateUserTaskReqModel.getState());
-        mapper.update(null,wrapper);
+    @Override
+    public boolean saveTask(UserTask userTask) throws ConsoleException {
+        UserPhoneToken userPhoneToken = Util.getUserToken();
+        TaskCategory taskCategory = taskCategoryService.getById(userTask.getTaskCategoryId());
+        userTask.setCreateBy(userPhoneToken.getUserId());
+        userTask.setUserName(userPhoneToken.getUserName());
+        userTask.setTaskCategoryName(taskCategory.getName());
+        return saveOrUpdate(userTask);
     }
 
     @Override

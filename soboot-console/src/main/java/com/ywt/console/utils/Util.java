@@ -1,13 +1,17 @@
 package com.ywt.console.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ywt.common.base.constant.XiotConstant;
+import com.ywt.common.base.util.JwtTokenUtils;
 import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.response.DefaultResponseDataWrapper;
+import com.ywt.console.models.UserPhoneToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -25,6 +29,19 @@ public class Util {
         res.setData(data);
         res.setPage(pageModel);
         return res;
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+    public static UserPhoneToken getUserToken(){
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader(XiotConstant.JWT_TOKEN_HEADER);
+        token = token.replaceAll(XiotConstant.JWT_TOKEN_PREFIX, "");
+        String subject = JwtTokenUtils.getSubject(token);
+        return JSONObject.parseObject(subject, UserPhoneToken.class);
     }
 
     public static Integer getTokenUserId() {

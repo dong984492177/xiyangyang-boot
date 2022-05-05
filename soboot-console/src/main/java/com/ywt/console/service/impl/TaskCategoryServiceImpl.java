@@ -1,5 +1,6 @@
 package com.ywt.console.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,9 +63,24 @@ public class TaskCategoryServiceImpl extends ServiceImpl<TaskCategoryMapper, Tas
     }
 
     @Override
-    public IPage<TaskCategoryResModel> queryList(TaskCategoryReqModel taskCategoryReqModel) throws ConsoleException {
+    public IPage<TaskCategoryResModel> queryListWithPage(TaskCategoryReqModel taskCategoryReqModel) throws ConsoleException {
 
         Page<TaskCategoryResModel> page = new Page<>(taskCategoryReqModel.getPageNo(), taskCategoryReqModel.getPageSize());
         return mapper.findList(page, taskCategoryReqModel);
+    }
+
+    @Override
+    public List<TaskCategoryResModel> queryList(Integer parentId, Integer id) throws ConsoleException {
+
+        QueryWrapper<TaskCategory> wrapper = new QueryWrapper<>();
+        if(!ObjectUtils.isEmpty(parentId)){
+            wrapper.eq("parent_id",parentId);
+        }
+        if(!ObjectUtils.isEmpty(id)){
+            wrapper.eq("id",id);
+        }
+
+        List<TaskCategory> categoryList = mapper.selectList(wrapper);
+        return BeanMapping.mapList(categoryList,TaskCategoryResModel.class);
     }
 }

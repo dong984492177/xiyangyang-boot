@@ -1,9 +1,12 @@
 package com.ywt.console.controller.activiti;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ywt.common.base.util.BeanMapping;
 import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.controller.BaseController;
 import com.ywt.common.response.DefaultResponseDataWrapper;
+import com.ywt.console.biz.TaskBizService;
+import com.ywt.console.entity.UserTask;
 import com.ywt.console.models.DeleteModel;
 import com.ywt.console.models.reqmodel.TaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateTaskCategoryReqModel;
@@ -18,10 +21,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +44,9 @@ public class TaskController extends BaseController {
     @Autowired
     private IUserTaskService userTaskService;
 
+    @Autowired
+    private TaskBizService taskBizService;
+
     /**
      * 获取流程定义XML
      */
@@ -57,17 +60,32 @@ public class TaskController extends BaseController {
      * @param reqModel
      * @return
      */
-    @PostMapping("/categoryList")
+    @PostMapping("/categoryListWithPage")
     @ApiOperation(value = "获取任务分类列表分页")
-    public DefaultResponseDataWrapper<List<TaskCategoryResModel>> categoryList(@RequestBody @ApiParam @Validated TaskCategoryReqModel reqModel){
+    public DefaultResponseDataWrapper<List<TaskCategoryResModel>> categoryListWithPage(@RequestBody @ApiParam @Validated TaskCategoryReqModel reqModel){
 
         DefaultResponseDataWrapper<List<TaskCategoryResModel>> responseModel = new DefaultResponseDataWrapper<>();
         PageWrapper pageModel = new PageWrapper(reqModel.getPageNo(), reqModel.getPageSize());
-        IPage<TaskCategoryResModel> iPage =  taskCategoryService.queryList(reqModel);
+        IPage<TaskCategoryResModel> iPage = taskCategoryService.queryListWithPage(reqModel);
         if(ObjectUtils.isEmpty(iPage)){
             return responseModel;
         }
         return parsePageModel(pageModel, iPage.getTotal(), iPage.getRecords(), responseModel);
+    }
+
+    /**
+     * 获取分类列表
+     * @param id
+     * @param parentId
+     * @return
+     */
+    @GetMapping("/categoryList")
+    @ApiOperation(value = "获取任务分类列表")
+    public DefaultResponseDataWrapper<List<TaskCategoryResModel>> categoryList( @ApiParam(value="分类父id",required = false) @RequestParam(value = "parentId",required = false) Integer parentId,
+                                                                                @ApiParam(value="分类id",required = false) @RequestParam(value = "id",required = false) Integer id                                            ){
+
+        List<TaskCategoryResModel> resultList = taskCategoryService.queryList(parentId,id);
+        return DefaultResponseDataWrapper.success(resultList);
     }
 
     /**
@@ -111,16 +129,17 @@ public class TaskController extends BaseController {
         return parsePageModel(pageModel, iPage.getTotal(), iPage.getRecords(), responseModel);
     }
 
+
     /**
-     * 保存任务
+     * 更新任务
      * @param reqModel
      * @return
      */
     @PostMapping("/taskSave")
-    @ApiOperation(value = "保存任务")
+    @ApiOperation(value = "更新任务")
     public DefaultResponseDataWrapper<String> saveTask(@RequestBody @ApiParam @Validated UpdateUserTaskReqModel reqModel){
 
-        userTaskService.saveTask(reqModel);
+        taskBizService.bindTask(reqModel);
         return DefaultResponseDataWrapper.success();
     }
 

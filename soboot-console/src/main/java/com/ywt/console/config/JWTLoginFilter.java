@@ -73,13 +73,19 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
                                                       Authentication auth) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         DefaultResponseDataWrapper<JSONObject> responseModel = new DefaultResponseDataWrapper<>();
-        Object userId = authentication.getPrincipal();
+        Integer userId = (Integer)authentication.getPrincipal();
         Object phone = authentication.getCredentials();
         res.setCharacterEncoding(CharsetConstant.CHARSET_UTF8);
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
         Date date = new Date();
         JSONObject object = new JSONObject();
-        UserPhoneToken userPhoneToken = UserPhoneToken.builder().userId((Integer)userId).phone((String)phone).build();
+        SysUser user = userMapper.queryUserWithRole(userId);
+        UserPhoneToken userPhoneToken = UserPhoneToken.builder()
+                .userId(userId)
+                .phone((String)phone)
+                .userName(user.getUserName())
+                .roleName(user.getRoleName())
+                .build();
         String tokenString = JwtTokenUtils.createToken(JSONObject.toJSONString(userPhoneToken), date);
         object.put("access_token",tokenString );
 

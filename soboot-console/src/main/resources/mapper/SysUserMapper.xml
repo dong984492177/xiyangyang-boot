@@ -51,4 +51,14 @@
         select user_name userName, phonenumber, `password` from sys_user
         where (user_name = #{account} or phonenumber = #{account}) and `password` = #{password} and is_delete = 0
     </select>
+
+    <select id="queryUserWithRole" resultType="com.ywt.console.entity.SysUser">
+        select
+        su.id,su.user_name userName,
+        sr.role_name roleName
+        from sys_user su
+        left join sys_user_role ur on su.id = ur.user_id
+        left join sys_role sr on sr.id = ur.role_id
+        where su.id = #{id}
+    </select>
 </mapper>

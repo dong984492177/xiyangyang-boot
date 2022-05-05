@@ -97,8 +97,10 @@ public class SysUser implements Serializable {
 
     @TableField(value = "is_dept_admin")
     private Integer isDeptAdmin;
-    //@TableField(value = "is_query_all_hotel")
-    //private Integer isQueryAllHotel;
+
     @TableField("delete_time")
     private Date deleteTime;
+
+    @TableField(exist = false)
+    private String roleName;
 }
