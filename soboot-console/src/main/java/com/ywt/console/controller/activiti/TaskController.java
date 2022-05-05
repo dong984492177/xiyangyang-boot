@@ -8,16 +8,19 @@ import com.ywt.common.response.DefaultResponseDataWrapper;
 import com.ywt.console.biz.TaskBizService;
 import com.ywt.console.entity.UserTask;
 import com.ywt.console.models.DeleteModel;
+import com.ywt.console.models.QueryModel;
 import com.ywt.console.models.reqmodel.TaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateTaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateUserTaskReqModel;
 import com.ywt.console.models.reqmodel.UserTaskReqModel;
+import com.ywt.console.models.resmodel.ActTaskResModel;
 import com.ywt.console.models.resmodel.TaskCategoryResModel;
 import com.ywt.console.models.resmodel.UserTaskResModel;
 import com.ywt.console.service.ITaskCategoryService;
 import com.ywt.console.service.IUserTaskService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.activiti.api.task.runtime.TaskRuntime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
@@ -46,6 +49,9 @@ public class TaskController extends BaseController {
 
     @Autowired
     private TaskBizService taskBizService;
+
+    @Autowired
+    private TaskRuntime taskRuntime;
 
     /**
      * 获取流程定义XML
@@ -149,5 +155,18 @@ public class TaskController extends BaseController {
 
         userTaskService.delTask(deleteModel);
         return DefaultResponseDataWrapper.success();
+    }
+
+    @PostMapping("/waitedTaskList")
+    @ApiOperation(value = "删除任务")
+    public DefaultResponseDataWrapper<List<ActTaskResModel>> getTaskWaitedList(@RequestBody @ApiParam @Validated QueryModel queryModel) {
+
+        DefaultResponseDataWrapper<List<ActTaskResModel>> responseModel = new DefaultResponseDataWrapper<>();
+        PageWrapper pageModel = new PageWrapper(queryModel.getPageNo(), queryModel.getPageSize());
+        IPage<ActTaskResModel> iPage =  taskBizService.getTaskWaitedList(queryModel);
+        if(ObjectUtils.isEmpty(iPage)){
+            return responseModel;
+        }
+        return parsePageModel(pageModel, iPage.getTotal(), iPage.getRecords(), responseModel);
     }
 }

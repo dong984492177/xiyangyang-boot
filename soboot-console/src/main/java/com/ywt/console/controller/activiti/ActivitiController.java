@@ -97,7 +97,7 @@ public class ActivitiController extends BaseController {
 
     /**
      * 删除流程定义
-     * @param idList
+     * @param ids
      * @return
      */
     @GetMapping("/delDefinition")
