@@ -6,10 +6,13 @@ import com.ywt.common.enums.DeleteStatus;
 import com.ywt.console.entity.SysUser;
 import com.ywt.console.service.impl.SysUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,11 +25,14 @@ import java.util.List;
  * @Create: 2021/1/12
  * @Copyright: 云网通信息科技
  */
+@Primary
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private SysUserServiceImpl userService;
+
+    private String ACTIVITI_ROLE = "ROLE_ACTIVITI_USER";
 
     @Override
     public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException {
@@ -35,6 +41,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         if (users.size() == 0) {
             return null;
         }
-        return new User(JSON.toJSONString(users.get(0)), users.get(0).getPassword(), Collections.emptyList());
+        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+        return new User(JSON.toJSONString(users.get(0)), users.get(0).getPassword(), Collections.singletonList(new SimpleGrantedAuthority(ACTIVITI_ROLE)));
     }
 }

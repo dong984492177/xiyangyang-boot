@@ -34,8 +34,8 @@ import java.util.List;
  * @Author: huangchaoyang
  * @Description:
  * @Version: 1.0
- * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
+ * @Create: 2022-05-06 14:30:06
+ * @Copyright: 互邦老宝贝
  */
 @Service
 public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> implements IUserTaskService {
@@ -77,5 +77,13 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
         }
         Page<UserTaskResModel> page = new Page<>(userTaskReqModel.getPageNo(), userTaskReqModel.getPageSize());
         return mapper.findList(page, userTaskReqModel);
+    }
+
+    @Override
+    public boolean updateUserTask(Integer id, String state) {
+        UpdateWrapper<UserTask> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id).set("state",state);
+
+        return mapper.update(null,wrapper)>0;
     }
 }

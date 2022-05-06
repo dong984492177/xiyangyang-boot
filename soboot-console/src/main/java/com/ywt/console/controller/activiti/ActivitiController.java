@@ -10,6 +10,7 @@ import com.ywt.console.models.FileModel;
 import com.ywt.console.models.activiti.ActivitiHighLineResModel;
 import com.ywt.console.models.activiti.ActivitiListReqModel;
 import com.ywt.console.models.activiti.ActivitiListResModel;
+import com.ywt.console.models.resmodel.ActDefinitionResModel;
 import com.ywt.console.utils.ImageUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -93,6 +94,17 @@ public class ActivitiController extends BaseController {
     @ApiOperation(value = "获取流程定义XML")
     public void processDefineXML(@RequestParam("deploymentId") String deploymentId,@RequestParam("resourceName") String resourceName){
         activitiBizService.getProcessDefineXML(deploymentId,resourceName);
+    }
+
+    /**
+     * 获取流程图
+     * @return
+     */
+    @GetMapping("/getDefinition/{instanceId}")
+    public DefaultResponseDataWrapper getDefinitionsByInstanceId(@PathVariable("instanceId") String instanceId){
+
+        ActDefinitionResModel result = activitiBizService.getDefinitionByInstanceId(instanceId);
+        return DefaultResponseDataWrapper.success(result);
     }
 
     /**

@@ -10,11 +10,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Author: zhangsan
+ * @Author: huangchaoyang
  * @Description:
  * @Version: 1.0
- * @Create: 2022-05-05
- * @Coyright: 喜阳阳信息科技
+ * @Create: 2022-05-06 14:37:06
+ * @Copyright: 互邦老宝贝
  */
 @Data
 @AllArgsConstructor

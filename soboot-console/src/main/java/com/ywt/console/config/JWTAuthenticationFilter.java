@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static com.ywt.console.constant.ResCode.FAIL;
@@ -43,6 +45,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
+
+    private String ACTIVITI_ROLE = "ROLE_ACTIVITI_USER";
 
     @Autowired
     public void setRedissonService(RedissonService redissonService) {
@@ -75,6 +79,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 String key = Util.getPermissonKey(token.getPhone());
                 Object phone = redissonService.getRBucket(key).get();
                 List<GrantedAuthority> authorities = (List<GrantedAuthority>) phone;
+                authorities.addAll(Collections.singletonList(new SimpleGrantedAuthority(ACTIVITI_ROLE)));
+                authorities.add(new SimpleGrantedAuthority("GROUP_admin"));
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(token.getUserId(), token.getPhone(), authorities));
             } catch (ExpiredJwtException e) {
                 log.error(e.toString());

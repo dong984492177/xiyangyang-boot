@@ -155,6 +155,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             rBucket.set(authorities);
             rBucket.expire(XiotConstant.JWT_TOKEN_TIME, TimeUnit.MILLISECONDS);
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user.getId(), user.getPhonenumber(), userDetails.getAuthorities()));
+            org.activiti.engine.impl.identity.Authentication.setAuthenticatedUserId(user.getId().toString());
             return new UsernamePasswordAuthenticationToken(user.getId(), user.getPhonenumber(), userDetails.getAuthorities());
         } else {
             throw new UsernameNotFoundException(ResCode.GET_ERROR.toString());

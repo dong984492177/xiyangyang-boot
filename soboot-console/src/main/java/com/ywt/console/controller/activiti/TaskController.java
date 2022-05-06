@@ -6,13 +6,13 @@ import com.ywt.common.bean.PageWrapper;
 import com.ywt.common.controller.BaseController;
 import com.ywt.common.response.DefaultResponseDataWrapper;
 import com.ywt.console.biz.TaskBizService;
-import com.ywt.console.entity.UserTask;
 import com.ywt.console.models.DeleteModel;
 import com.ywt.console.models.QueryModel;
 import com.ywt.console.models.reqmodel.TaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateTaskCategoryReqModel;
 import com.ywt.console.models.reqmodel.UpdateUserTaskReqModel;
 import com.ywt.console.models.reqmodel.UserTaskReqModel;
+import com.ywt.console.models.reqmodel.activiti.ActFormDataReqModel;
 import com.ywt.console.models.resmodel.ActTaskResModel;
 import com.ywt.console.models.resmodel.TaskCategoryResModel;
 import com.ywt.console.models.resmodel.UserTaskResModel;
@@ -20,13 +20,17 @@ import com.ywt.console.service.ITaskCategoryService;
 import com.ywt.console.service.IUserTaskService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.activiti.api.task.model.Task;
 import org.activiti.api.task.runtime.TaskRuntime;
+import org.activiti.bpmn.model.FormProperty;
+import org.activiti.bpmn.model.UserTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ywt.console.utils.Util.parsePageModel;
 
@@ -168,5 +172,34 @@ public class TaskController extends BaseController {
             return responseModel;
         }
         return parsePageModel(pageModel, iPage.getTotal(), iPage.getRecords(), responseModel);
+    }
+
+
+    @GetMapping("/applyDetail/{taskId}")
+    @ApiOperation(value = "申请详情")
+    public DefaultResponseDataWrapper<List<String>> applyDetail(@PathVariable(value = "taskId",required = true) String taskId){
+
+        List<String> resultList = taskBizService.applyDetail(taskId);
+        return DefaultResponseDataWrapper.success(resultList);
+    }
+
+    @PostMapping("/applyCheck/{taskId}")
+    @ApiOperation(value = "申请审核")
+    public DefaultResponseDataWrapper<String> applySave(@PathVariable(value = "taskId",required = true) String taskId,
+                                                        @RequestBody @Validated  List<ActFormDataReqModel> reqModelList){
+        Boolean result = taskBizService.applySave(taskId,reqModelList);
+        if(result){
+            return DefaultResponseDataWrapper.success();
+        }
+
+        return DefaultResponseDataWrapper.fail(-1,"审核出错!");
+    }
+
+    @GetMapping("/detail/{taskId}")
+    @ApiOperation(value = "任务详情")
+    public DefaultResponseDataWrapper<UserTaskResModel> detail(@PathVariable(value = "taskId",required = true) String taskId){
+
+        UserTaskResModel result = BeanMapping.map(userTaskService.getById(Integer.valueOf(taskId)),UserTaskResModel.class);
+        return DefaultResponseDataWrapper.success(result);
     }
 }

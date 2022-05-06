@@ -45,4 +45,12 @@ public interface IUserTaskService extends IService<UserTask> {
      * @throws Exception
      */
     IPage<UserTaskResModel> queryList(UserTaskReqModel userTaskReqModel) throws ConsoleException;
+
+    /**
+     * 更新任务状态
+     * @param id
+     * @param state
+     * @return
+     */
+    boolean updateUserTask(Integer id,String state);
 }

@@ -25,8 +25,8 @@ import java.util.List;
  * @Author: huangchaoyang
  * @Description:
  * @Version: 1.0
- * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
+ * @Create: 2022-05-06 14:30:06
+ * @Copyright: 互邦老宝贝
  */
 @Service
 public class TaskCategoryServiceImpl extends ServiceImpl<TaskCategoryMapper, TaskCategory> implements ITaskCategoryService {

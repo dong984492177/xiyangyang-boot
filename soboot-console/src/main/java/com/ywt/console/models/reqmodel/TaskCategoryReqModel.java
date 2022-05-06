@@ -12,11 +12,9 @@ import lombok.*;
  * @Coyright: 喜阳阳信息科技
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 public class TaskCategoryReqModel extends QueryModel {
 
     @ApiModelProperty(value = "名称")

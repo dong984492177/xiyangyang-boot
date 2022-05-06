@@ -13,11 +13,9 @@ import java.util.Date;
  * @Coyright: 喜阳阳信息科技
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 public class UserTaskResModel {
 
     @ApiModelProperty(value = "id", dataType = "int")

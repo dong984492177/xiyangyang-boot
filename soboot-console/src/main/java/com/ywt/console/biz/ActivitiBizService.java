@@ -2,23 +2,27 @@ package com.ywt.console.biz;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ywt.common.base.util.BeanMapping;
 import com.ywt.common.base.util.StringUtils;
 import com.ywt.console.entity.activiti.ActDeployment;
 import com.ywt.console.mapper.ActDeploymentMapper;
 import com.ywt.console.models.activiti.ActivitiHighLineResModel;
 import com.ywt.console.models.activiti.ActivitiListReqModel;
 import com.ywt.console.models.activiti.ActivitiListResModel;
+import com.ywt.console.models.resmodel.ActDefinitionResModel;
 import com.ywt.console.service.IActDefinitionService;
 import com.ywt.console.utils.Util;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +58,9 @@ public class ActivitiBizService {
 
     @Autowired
     private IActDefinitionService actDefinitionService;
+
+    @Autowired
+    private RuntimeService runtimeService;
 
     /**
      * 流程定义的激活或者挂起
@@ -239,5 +246,18 @@ public class ActivitiBizService {
                 .build();
 
         return resModel;
+    }
+
+    /**
+     * 获取流程图
+     * @param instanceId
+     * @return
+     */
+    public ActDefinitionResModel getDefinitionByInstanceId(String instanceId){
+
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId).singleResult();
+        String deploymentId = processInstance.getDeploymentId();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
+        return BeanMapping.map(processDefinition,ActDefinitionResModel.class);
     }
 }
