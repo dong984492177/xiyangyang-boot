@@ -2,7 +2,6 @@ package com.ywt.common.bean;
 
 import com.google.common.collect.Maps;
 import com.ywt.common.enums.EncryptType;
-import com.ywt.common.enums.EncryptType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -16,7 +15,6 @@ import java.util.Map;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class ClientRequestContext implements Serializable {
 

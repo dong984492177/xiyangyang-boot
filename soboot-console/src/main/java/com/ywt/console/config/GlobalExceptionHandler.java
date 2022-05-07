@@ -1,6 +1,5 @@
 package com.ywt.console.config;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.ywt.common.base.util.StringUtils;
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +34,6 @@ import static java.util.stream.Collectors.joining;
  * @Description:  全局controller异常拦截
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @RestControllerAdvice
 @Slf4j

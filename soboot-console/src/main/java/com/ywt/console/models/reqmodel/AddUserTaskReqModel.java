@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @Author: zhangsan
+ * @Author: huangchaoyang
  * @Description:
  * @Version: 1.0
  * @Create: 2022-05-03
- * @Coyright: 喜阳阳信息科技
  */
 @Data
 @Builder

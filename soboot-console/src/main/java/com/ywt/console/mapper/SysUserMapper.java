@@ -9,13 +9,9 @@ import com.ywt.console.models.resmodel.systemresmodels.QueryUserListResModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+
 /**
- * <p>
- * 用户信息表 Mapper 接口
- * </p>
- *
- * @author xijun.shao
- * @since 2020-06-05
+ * 用户信息mapper
  */
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {

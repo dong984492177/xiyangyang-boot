@@ -3,13 +3,17 @@ package com.ywt.common.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.ywt.common.enums.DeleteStatus;
-import com.ywt.common.enums.DeleteStatus;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * @Author: huangchaoyang
+ * @Description: 基类
+ * @Version: 1.0
+ * @Create: 2022-05-06 19:10:06
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor

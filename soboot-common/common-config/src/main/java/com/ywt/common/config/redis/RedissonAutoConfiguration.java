@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
  * @Description: Redisson自动装配类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Configuration
 @ConditionalOnClass({RedissonClient.class, RedissonService.class})

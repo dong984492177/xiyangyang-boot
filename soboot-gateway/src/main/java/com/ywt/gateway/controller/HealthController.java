@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: 健康检查
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @RestController
 public class HealthController extends BaseRestController {

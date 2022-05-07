@@ -23,7 +23,6 @@ import static java.util.stream.Collectors.joining;
  * @Description: 请求日志aop
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Component
 @Aspect

@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 @Service

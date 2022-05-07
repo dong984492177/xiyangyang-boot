@@ -19,10 +19,9 @@ import java.time.LocalDateTime;
 
 /**
  * @Author: huangchaoyang
- * @Description:
+ * @Description: 登录日志拦截器
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 public class LoginLogInterceptor implements HandlerInterceptor {

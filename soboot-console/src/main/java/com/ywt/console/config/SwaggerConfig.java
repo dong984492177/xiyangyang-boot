@@ -23,7 +23,6 @@ import java.util.List;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Configuration
 @EnableSwagger2
@@ -43,7 +42,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("云网通 Restful Apis")
+                .title("接口 Restful Apis")
                 .description("api接口文档查看")
                 .version("1.0")
                 .build();

@@ -11,7 +11,6 @@ import java.util.List;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 喜阳阳
  */
 public interface IActDefinitionService extends IService<ActDefinition> {
 

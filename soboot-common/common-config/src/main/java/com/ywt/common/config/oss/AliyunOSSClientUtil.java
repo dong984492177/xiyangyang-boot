@@ -14,7 +14,6 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.aliyun.oss.ClientException;
@@ -32,7 +31,6 @@ import com.aliyun.oss.model.PutObjectResult;
  * @Description: 阿里云oss
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class AliyunOSSClientUtil {
     private final Logger logger = LoggerFactory.getLogger(AliyunOSSClientUtil.class);

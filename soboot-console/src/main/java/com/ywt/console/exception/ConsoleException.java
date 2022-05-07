@@ -8,7 +8,6 @@ import com.ywt.common.exception.DefaultWebException;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Coyright: 云网通信息科技
  */
 public class ConsoleException extends DefaultWebException {
 

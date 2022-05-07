@@ -9,13 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 /**
- * <p>
- * 菜单权限表 Mapper 接口
- * </p>
- *
- * @author xijun.shao
- * @since 2020-06-05
+ * 菜单mapper
  */
 @Repository
 public interface SysMenuMapper extends BaseMapper<SysMenu> {

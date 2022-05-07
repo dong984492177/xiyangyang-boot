@@ -13,12 +13,11 @@ import java.util.Date;
  * @Description: JwtTokenUtils
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class JwtTokenUtils {
 
-    public static String SECRET = "jwtsecret-xiezhu";
-    public static String ISS = "xiezhu";
+    public static String SECRET = "jwtsecret-xiyangyang";
+    public static String ISS = "xiyangyang";
 
     // 创建token
     public static String createToken(String subject, Date date) {

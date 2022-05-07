@@ -20,7 +20,6 @@ import java.util.*;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class CoreDateUtils {
 	private static final Logger logger = LoggerFactory.getLogger(CoreDateUtils.class.getName());
@@ -448,5 +447,13 @@ public class CoreDateUtils {
         long s = (timeMillis / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
         long sss = (timeMillis - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - min * 60 * 1000 - s * 1000);
         return (day > 0 ? day + "," : "") + hour + ":" + min + ":" + s + "." + sss;
+    }
+
+    /**
+     * 获取当前时间
+     * @return
+     */
+    public static Date now(){
+        return new Date();
     }
 }

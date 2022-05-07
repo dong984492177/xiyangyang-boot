@@ -20,7 +20,6 @@ import java.util.function.BiConsumer;
  * @Description: 不同类型的bean对象属性映射转化 基于Dozer封装, 对使用者透明
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class BeanMapping {
 
@@ -41,11 +40,10 @@ public class BeanMapping {
                 if (__instance__ == null) {
                     // 支持XML配置或者传入映射关系
                     List<String> mappingFiles = Lists.newArrayList();
-                    mappingFiles.add("dozer/customDozerJdk8Converters.xml"); // 不支持设置多个configuration blocks
-
+                    // 不支持设置多个configuration blocks
+                    mappingFiles.add("dozer/customDozerJdk8Converters.xml");
                     DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
                     dozerBeanMapper.setMappingFiles(mappingFiles);
-
                     __instance__ = dozerBeanMapper;
                 }
             } finally {
@@ -150,105 +148,4 @@ public class BeanMapping {
         map(source, result, dstClass, biConsumer);
         return result;
     }
-
-
-    // TODO 先实现最基本的映射, 碰到需求再完善
-
-    /**
-     *  源实体对象 {@code source} 转换成目标bean对象 {@code D}；
-     *
-     *  通过 {@code fieldMapping} 字段定义名称不同字段对应，key为源实体对象中字段名称，value为目标bean对象中字段名称。只需设置字段名称不相同字段。
-     *
-     *  通过 {@code excludingFieldSet} 字段定义需要排除的源实体对象 {@code source} 的字段
-     *
-     * @param source
-     * @param destClass
-     * @param fieldMapping
-     * @param excludingFieldSet
-     * @param <S>
-     * @param <D>
-     * @return
-     * @throws Exception
-     */
-    /*
-    public static <S, D> D convertEntityToBean(S source, Class<D> destClass, Map<String, String> fieldMapping, Set<String> excludingFieldSet) throws Exception {
-        DozerBeanMapper mapper = new DozerBeanMapper();
-
-        if ((fieldMapping != null && !fieldMapping.isEmpty()) || (excludingFieldSet != null && excludingFieldSet.size() > 0)) {
-            final Map<String, String> internalFieldMapping = fieldMapping;
-            BeanMappingBuilder builder = new BeanMappingBuilder() {
-                @Override
-                protected void configure() {
-                    TypeMappingBuilder typeMappingBuilder = mapping(source.getClass(), destClass, TypeMappingOptions.oneWay());
-
-                    if (fieldMapping != null && !fieldMapping.isEmpty()) {
-                        for (String sourceField : internalFieldMapping.keySet()) {
-                            String destField = internalFieldMapping.get(sourceField);
-                            typeMappingBuilder.fields(sourceField, destField);
-                        }
-                    }
-
-                    if (excludingFieldSet != null && excludingFieldSet.size() > 0) {
-                        for (String excludingField : excludingFieldSet) {
-                            typeMappingBuilder.exclude(excludingField);
-                        }
-                    }
-                }
-            };
-            mapper.addMapping(builder);
-        }
-
-        return mapper.map(source, destClass);
-    }
-    */
-
-
-    /**
-     *  源实体对象 {@code source} 转换成目标bean对象 {@code D}；
-     *
-     *  通过 {@code fieldMapping} 字段定义名称不同字段对应，key为源实体对象中字段名称，value为目标bean对象中字段名称。只需设置字段名称不相同字段。
-     *
-     *  通过 {@code excludingFieldSet} 字段定义需要排除的源实体对象 {@code source} 的字段
-     *
-     * @param source
-     * @param dest
-     * @param fieldMapping
-     * @param excludingFieldSet
-     * @param <S>
-     * @param <D>
-     * @return
-     * @throws Exception
-     */
-    /*
-    public static <S, D> D convertEntityToBean(S source, D dest, Map<String, String> fieldMapping, Set<String> excludingFieldSet) throws Exception {
-        DozerBeanMapper mapper = new DozerBeanMapper();
-
-        if ((fieldMapping != null && !fieldMapping.isEmpty()) || (excludingFieldSet != null && excludingFieldSet.size() > 0)) {
-            final Map<String, String> internalFieldMapping = fieldMapping;
-            BeanMappingBuilder builder = new BeanMappingBuilder() {
-                @Override
-                protected void configure() {
-                    TypeMappingBuilder typeMappingBuilder = mapping(source.getClass(), dest.getClass(), TypeMappingOptions.oneWay());
-
-                    if (fieldMapping != null && !fieldMapping.isEmpty()) {
-                        for (String sourceField : internalFieldMapping.keySet()) {
-                            String destField = internalFieldMapping.get(sourceField);
-                            typeMappingBuilder.fields(sourceField, destField);
-                        }
-                    }
-
-                    if (excludingFieldSet != null && excludingFieldSet.size() > 0) {
-                        for (String excludingField : excludingFieldSet) {
-                            typeMappingBuilder.exclude(excludingField);
-                        }
-                    }
-                }
-            };
-            mapper.addMapping(builder);
-        }
-
-        mapper.map(source, dest);
-        return dest;
-    }
-    */
 }

@@ -5,7 +5,6 @@ package com.ywt.common.exception;
  * @Description: 默认API异常
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class DefaultApiException extends RuntimeException {
     private static final long serialVersionUID = 591990235347646359L;

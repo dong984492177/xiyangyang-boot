@@ -13,7 +13,6 @@ import cn.hutool.core.util.NumberUtil;
  * @Description: 生成串工具类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class GeneratorUtils {
 
@@ -21,8 +20,8 @@ public class GeneratorUtils {
 
             List list = CollectionUtils.arrayToList(NumberUtil.generateRandomNumber(1, 9, 3));
             String mac =  CollectionUtil.join(list,"") + productId + gatewayId+ roomId;
-            mac.substring(0,mac.length()<=20?mac.length():20);//mac 最大长度20
-
+            //mac 最大长度20
+            mac.substring(0,mac.length()<=20?mac.length():20);
             return mac;
         }
 

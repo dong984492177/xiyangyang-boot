@@ -1,4 +1,3 @@
-/*
 package com.ywt.console.config;
 
 import cn.hutool.core.thread.threadlocal.NamedThreadLocal;
@@ -10,24 +9,14 @@ import com.ywt.common.base.util.CoreDateUtils;
 import com.ywt.common.base.util.Exceptions;
 import com.ywt.common.base.util.JwtTokenUtils;
 import com.ywt.common.base.util.StringUtils;
-import com.ywt.common.enums.OperationType;
 import com.ywt.common.enums.TargetType;
-import com.xiot.yuquan.ctl.api.bean.log.ApiLogModel;
-import com.xiot.yuquan.ctl.api.service.log.ApiLogApiService;
 import com.ywt.console.entity.SysUser;
-import com.ywt.console.mapper.HotelOuterDeviceAccountMapper;
-import com.ywt.console.mapper.OuterDeviceMapper;
+import com.ywt.console.entity.log.ApiLog;
 import com.ywt.console.models.UserPhoneToken;
-import com.ywt.console.service.IDeviceService;
-import com.ywt.console.service.ISceneService;
+import com.ywt.console.service.IApiLogService;
 import com.ywt.console.service.ISysUserService;
-import com.ywt.console.service.impl.GatewayServiceImpl;
-import com.ywt.console.service.impl.HotelServiceServiceImpl;
-import com.ywt.console.service.impl.SceneModelServiceImpl;
-import com.ywt.console.service.impl.VoiceCommandTagServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.utils.IOUtils;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -43,55 +32,26 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
-*/
-/*
+
+/**
  * @Author: huangchaoyang
  * @Description: api日志拦截器
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
- *//*
-
+ */
 @Component
 @Slf4j
 public class ApiLogInterceptor implements HandlerInterceptor {
-
-    //private static ApiLogMapper apiLogMapper = SpringContextHolder.getBean(ApiLogMapper.class);
-    //private static SysUserMapper userMapper = SpringContextHolder.getBean(SysUserMapper.class);
-    @Reference
-    private ApiLogApiService apiLogApiService;
 
     @Autowired
     private ISysUserService sysUserService;
 
     @Autowired
-    private GatewayServiceImpl gatewayService;
+    private IApiLogService apiLogService;
 
-    @Autowired
-    private ISceneService sceneService;
-
-    @Autowired
-    private SceneModelServiceImpl sceneModelServiceImpl;
-
-    @Autowired
-    private VoiceCommandTagServiceImpl voiceCommandTagService;
-
-    @Autowired
-    private OuterDeviceMapper outerDeviceMapper;
-
-    @Autowired
-    private HotelOuterDeviceAccountMapper hotelOuterDeviceAccountMapper;
-
-    @Autowired
-    private HotelServiceServiceImpl hotelServiceService;
-
-    @Autowired
-    private IDeviceService deviceService;
 
     private static final ThreadLocal<Long> startTimeThreadLocal =
             new NamedThreadLocal<Long>("ThreadLocal StartTime");
@@ -128,7 +88,6 @@ public class ApiLogInterceptor implements HandlerInterceptor {
         log.info("Method: " + request.getMethod());
         log.info("ParameterMap: " + JSONObject.toJSONString(request.getParameterMap()));
 
-        log.info("apiLogApiService: " + apiLogApiService);
         //保存日志信息
         if (handler instanceof HandlerMethod) {
             Method m = ((HandlerMethod) handler).getMethod();
@@ -142,16 +101,14 @@ public class ApiLogInterceptor implements HandlerInterceptor {
         }
     }
 
-    */
-/**
+    /**
      * @param request
      * @param handler
      * @param ex
      * @param title
      * @param rp
      * @description 保存日志
-     *//*
-
+     */
     public void saveLog(HttpServletRequest request, Object handler, Exception ex, String title, Action rp) {
         Integer userId = 0;
         String tokenString = request.getHeader(XiotConstant.JWT_TOKEN_HEADER);
@@ -162,7 +119,7 @@ public class ApiLogInterceptor implements HandlerInterceptor {
             userId = token.getUserId();
         }
 
-        ApiLogModel apiLog = new ApiLogModel();
+        ApiLog apiLog = new ApiLog();
         apiLog.setRemoteAddr(StringUtils.getRemoteAddr(request));
         apiLog.setRequestUri(request.getRequestURI());
         apiLog.setMethod(request.getMethod());
@@ -185,14 +142,14 @@ public class ApiLogInterceptor implements HandlerInterceptor {
 
     public class SaveLogThread extends Thread {
 
-        private ApiLogModel apiLog;
+        private ApiLog apiLog;
         private Object handler;
         private Exception ex;
         private Integer userId;
         private Map<String, Object> map;
         private Action rp;
 
-        public SaveLogThread(ApiLogModel apiLog, Object handler, Exception ex, Integer userId, Map<String, Object> map, Action rp) {
+        public SaveLogThread(ApiLog apiLog, Object handler, Exception ex, Integer userId, Map<String, Object> map, Action rp) {
             super(SaveLogThread.class.getSimpleName());
             this.apiLog = apiLog;
             this.handler = handler;
@@ -225,9 +182,8 @@ public class ApiLogInterceptor implements HandlerInterceptor {
             apiLog.setException(Exceptions.getStackTraceAsString(ex));
             // 保存日志信息
             log.info("真正开始打印日志操作,apiLog:" + apiLog);
-            apiLogApiService.addApiLog(apiLog);
+            apiLogService.save(apiLog);
             log.info("结束真正开始打印日志操作,apiLog:" + apiLog);
         }
     }
 }
-*/

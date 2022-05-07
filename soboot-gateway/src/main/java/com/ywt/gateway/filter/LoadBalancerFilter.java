@@ -17,7 +17,6 @@ import static org.springframework.cloud.gateway.filter.LoadBalancerClientFilter.
  * @Description: 控制服务调用(不同版本）适用于灰度发布
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class LoadBalancerFilter {
 

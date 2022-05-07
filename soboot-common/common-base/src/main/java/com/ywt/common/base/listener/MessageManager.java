@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class MessageManager {
 
@@ -75,11 +74,6 @@ public class MessageManager {
 			return;
 		}
 
-/*		MessageListener listener = newListener(listenerClass);
-		if (listener == null) {
-			return;
-		}*/
-
 		for (String action : actions) {
 			List<MessageListener> list = null;
 			if (listenerAnnotation.async()) {
@@ -106,16 +100,6 @@ public class MessageManager {
 			}
 		}
 	}
-
-/*	private MessageListener newListener(Class<? extends MessageListener> listenerClass) {
-		MessageListener listener = null;
-		try {
-			listener = listenerClass.newInstance();
-		} catch (Throwable e) {
-			logger.error(String.format("listener \"%s\" newInstance is error. ", listenerClass), e);
-		}
-		return listener;
-	}*/
 
 	private boolean listenerHasRegisterBefore(MessageListener listener) {
 		for (Map.Entry<String, List<MessageListener>> entry : listenerMap.entrySet()) {

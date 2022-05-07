@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
@@ -23,8 +22,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     public RequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
-        bodyCopier = StreamUtils.copyToByteArray(request.getInputStream());
-        //bodyCopier = HttpHelper.getBodyString(request).getBytes(Charset.forName("UTF-8"));
+        //bodyCopier = StreamUtils.copyToByteArray(request.getInputStream());
+        bodyCopier = HttpHelper.getBodyString(request).getBytes(Charset.forName("UTF-8"));
     }
 
     @Override

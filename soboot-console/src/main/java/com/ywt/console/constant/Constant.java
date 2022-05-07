@@ -5,7 +5,6 @@ package com.ywt.console.constant;
  * @Description: 系统常量类定义
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class Constant {
     /** 是否菜单外链（是） */
@@ -26,14 +25,6 @@ public class Constant {
     /** Layout组件标识 */
     public static final String LAYOUT = "Layout";
 
-    public static final String GATEWAY_URL = "/gateway/";//网关
-
-    public static final String  TAG_LIST ="cache_tagList";
-
-    public static final String  TAG_LIST_LOCK ="cache_tagList_lock";
-
-    public static final String  CATEGORY_LIST ="cache_categoryList";
-
-    public static final String  CATEGORY_LIST_LOCK ="cache_categoryList_lock";
-
+    /** 网关 */
+    public static final String GATEWAY_URL = "/gateway/";
 }

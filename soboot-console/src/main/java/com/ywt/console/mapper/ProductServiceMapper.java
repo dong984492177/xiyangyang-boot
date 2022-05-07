@@ -11,13 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 /**
- * <p>
- * 物模型-服务 Mapper 接口
- * </p>
- *
- * @author: xijun.shao
- * @Copyright:  Kuaizhu
+ * 产品服务mapper
  */
 @Repository
 public interface ProductServiceMapper extends BaseMapper<ProductService> {

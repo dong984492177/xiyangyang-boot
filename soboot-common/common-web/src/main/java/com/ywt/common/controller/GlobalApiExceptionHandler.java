@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
  * 此处理器应当按照客户端请求响应规范返回http status,等异常信息
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 @ControllerAdvice(annotations = RestController.class)

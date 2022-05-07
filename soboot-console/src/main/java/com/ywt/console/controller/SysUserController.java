@@ -1,6 +1,5 @@
 package com.ywt.console.controller;
 
-import com.ywt.common.enums.OperationType;
 import com.ywt.common.response.DefaultResponseDataWrapper;
 import com.ywt.console.models.UserDetailReqModel;
 import com.ywt.console.models.UserRegisterReqModel;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @RestController
 @RequestMapping("/User")

@@ -11,7 +11,6 @@ import java.util.List;
  * @Description: 封装分页请求 支持排序
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class ApiRequestPage implements Serializable {
 

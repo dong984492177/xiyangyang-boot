@@ -34,7 +34,6 @@ import java.time.LocalDateTime;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 @Component
@@ -99,7 +98,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
        }
     }
 
-    public  String getOrigin(LoginLog loginLog,HttpServletRequest request){
+    private String getOrigin(LoginLog loginLog,HttpServletRequest request){
 
         String userAgent = request.getHeader("user-agent").toLowerCase();
         loginLog.setUserAgent(userAgent);

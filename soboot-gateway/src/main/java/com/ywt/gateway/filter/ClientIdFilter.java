@@ -21,7 +21,6 @@ import java.util.function.Consumer;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Component
 @Slf4j

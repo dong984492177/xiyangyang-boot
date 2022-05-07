@@ -12,7 +12,6 @@ import java.util.concurrent.Executor;
  * @Description: 线程池定义
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Component
 public class ThreadConfig implements AsyncConfigurer {

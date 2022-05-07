@@ -34,7 +34,6 @@ import java.util.Map;
  * MD5、SHA1、CRC32
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class CoreSecurityUtils {
 
@@ -261,8 +260,6 @@ public class CoreSecurityUtils {
             Map<String, String> keyMap = new HashMap<>();
             keyMap.put(PUBLIC_KEY, pub_key);
             keyMap.put(PRIVATE_KEY, pri_key);
-            System.out.println("公钥：" + pub_key);
-            System.out.println("私钥：" + pri_key);
             return keyMap;
         } catch(Exception e){
             throw new RuntimeException("初始化RSA密钥对时遇到异常", e);

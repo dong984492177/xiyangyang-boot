@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @Description: WebSecurityConfig
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Configuration
 @EnableWebSecurity
@@ -47,15 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/configuration/security",
                         "/swagger-resources/**",
                         "/doc.html",
-                        "/ucam3/setting/roomNo/update",
                         "/webSocket/**",
                         "/configuration/ui",
                         "/configuration/security",
                         "/swagger-ui.html",
                         "/health",
                         "/job/",
-                        "/job/**",
-                        "/mqtt/**"
+                        "/job/**"
                         ).permitAll()
                 .anyRequest().authenticated() // 所有请求需要身份认证
                 .and()

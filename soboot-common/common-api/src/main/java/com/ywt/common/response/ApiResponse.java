@@ -11,17 +11,16 @@ import java.util.Collection;
  * @Description: 封装API响应对象供自定义查询使用 支持分页
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class ApiResponse<E> implements Serializable {
 
     private static final long serialVersionUID = -706275852644562464L;
 
-    /* 回写请求时的分页设置 */
+    //回写请求时的分页设置
     private int page;
     private int pageSize;
 
-    /* 满足条件的记录总数 */
+    //满足条件的记录总数
     private long total = 0;
 
     private Collection<E> pagedData;

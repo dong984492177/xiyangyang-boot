@@ -3,15 +3,12 @@ package com.ywt.common.helper;
 import com.alibaba.fastjson.JSON;
 import com.ywt.common.base.util.BeanMapping;
 import com.ywt.common.config.redis.RedissonService;
-import com.ywt.common.base.util.BeanMapping;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -22,7 +19,6 @@ import java.util.function.Supplier;
  * @Description: 查询缓存模版方法类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Component
 public class CacheTemplateHelper<R> {

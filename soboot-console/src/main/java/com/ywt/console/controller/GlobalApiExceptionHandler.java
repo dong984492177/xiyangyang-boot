@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
  * @Description: web应用层全局异常处理者
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 @ControllerAdvice(annotations = RestController.class)

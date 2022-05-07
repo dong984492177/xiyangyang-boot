@@ -6,6 +6,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 
 @Data
 public abstract class AbstractRocketConsumer implements RocketConsumer {
+
     protected String topics;
     protected String tags;
     protected String group;

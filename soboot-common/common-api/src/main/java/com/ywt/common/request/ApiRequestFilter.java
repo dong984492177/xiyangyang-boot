@@ -10,7 +10,6 @@ import java.util.List;
  * @Description: 请求过滤条件
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class ApiRequestFilter implements Serializable {
     private static final long serialVersionUID = 6045608558878075337L;

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
  * @Description: 统一WEB异常, 其他自定义异常均继承
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class DefaultWebException extends RuntimeException {
 

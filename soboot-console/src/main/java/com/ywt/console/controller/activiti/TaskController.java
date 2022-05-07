@@ -128,7 +128,7 @@ public class TaskController extends BaseController {
      */
     @PostMapping("/taskList")
     @ApiOperation(value = "获取任务列表分页")
-    public DefaultResponseDataWrapper<List<UserTaskResModel>> categoryList(@RequestBody @ApiParam @Validated UserTaskReqModel reqModel){
+    public DefaultResponseDataWrapper<List<UserTaskResModel>> taskList(@RequestBody @ApiParam @Validated UserTaskReqModel reqModel){
 
         DefaultResponseDataWrapper<List<UserTaskResModel>> responseModel = new DefaultResponseDataWrapper<>();
         PageWrapper pageModel = new PageWrapper(reqModel.getPageNo(), reqModel.getPageSize());
@@ -162,7 +162,7 @@ public class TaskController extends BaseController {
     }
 
     @PostMapping("/waitedTaskList")
-    @ApiOperation(value = "删除任务")
+    @ApiOperation(value = "代办任务")
     public DefaultResponseDataWrapper<List<ActTaskResModel>> getTaskWaitedList(@RequestBody @ApiParam @Validated QueryModel queryModel) {
 
         DefaultResponseDataWrapper<List<ActTaskResModel>> responseModel = new DefaultResponseDataWrapper<>();

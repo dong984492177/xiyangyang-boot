@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Description: 阿里云oss配置
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Data
 @ConfigurationProperties(prefix = "oss.aliyun")

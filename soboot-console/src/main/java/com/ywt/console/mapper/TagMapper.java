@@ -11,20 +11,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 /**
- * <p>
- *  Mapper 接口
- * </p>
- *
- * @author junyu.wang
- * @since 2020-06-13
+ * 标签mapper
  */
 @Repository
 public interface TagMapper extends BaseMapper<Tag> {
 
     /*
      * description: 查询标签
-     * author: wangjunyu
      * date: 2020/6/13 13:45
      * param: [page, queryTagReqModel]
      * return: com.baomidou.mybatisplus.core.metadata.IPage<com.xiot.yuquan.console.models.resmodel.QueryTagResModel>

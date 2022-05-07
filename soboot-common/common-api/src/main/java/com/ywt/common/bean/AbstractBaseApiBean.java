@@ -5,10 +5,9 @@ import lombok.Setter;
 
 /**
  * @Author: huangchaoyang
- * @Description:
+ * @Description: 抽象ApiBean
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Setter
 @Getter

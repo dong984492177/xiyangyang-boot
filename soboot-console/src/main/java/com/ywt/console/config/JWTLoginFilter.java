@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
  * @Description: jwt登录过滤器
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter{
 

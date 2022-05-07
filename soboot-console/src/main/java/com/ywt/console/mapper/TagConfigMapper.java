@@ -13,6 +13,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+/**
+ * 标签配置mapper
+ */
 @Repository
 public interface TagConfigMapper extends BaseMapper<TagConfig> {
 

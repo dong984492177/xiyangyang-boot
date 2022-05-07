@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -17,7 +16,6 @@ import java.util.Map;
  * @Description: mq消费者配置
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 @Configuration

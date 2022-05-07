@@ -7,7 +7,6 @@ import com.ywt.common.constant.ResCodeConstant;
  * @Description: 响应结果状态码
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class ResCode extends ResCodeConstant {
     /**
@@ -63,9 +62,4 @@ public class ResCode extends ResCodeConstant {
      * 上传error
      */
     public static final Integer FILEUPLOAD_ERROR = 810110;
-
-    /**
-     * 真实姓名与手机号不匹配
-     */
-    public static final Integer NAME_PHONE_NOT_MATCH = 810111;
 }

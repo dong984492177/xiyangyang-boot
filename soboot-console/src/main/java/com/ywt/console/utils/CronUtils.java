@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
  * @Description: corn表达式工具
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 public class CronUtils {

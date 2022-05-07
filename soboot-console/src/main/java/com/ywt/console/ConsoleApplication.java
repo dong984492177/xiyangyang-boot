@@ -19,9 +19,8 @@ import javax.sql.DataSource;
  * @Description: console启动类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
-@SpringBootApplication(scanBasePackages = {"com.ywt.console.*","com.ywt.common.config.*","com.ywt.common.helper"})
+@SpringBootApplication(scanBasePackages = {"com.ywt.console.*","com.ywt.common.config.*","com.ywt.common.config.mq.*"})
 @MapperScan("com.ywt.console.mapper")
 @EnableAsync
 @EnableTransactionManagement

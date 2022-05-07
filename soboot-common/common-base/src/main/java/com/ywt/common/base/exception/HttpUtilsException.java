@@ -5,7 +5,6 @@ package com.ywt.common.base.exception;
  * @Description: HttpUtils异常
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class HttpUtilsException extends RuntimeException {
 

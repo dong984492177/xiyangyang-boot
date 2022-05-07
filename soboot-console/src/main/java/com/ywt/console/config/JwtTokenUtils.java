@@ -14,20 +14,19 @@ import com.ywt.common.base.constant.XiotConstant;
  * @Description: JwtTokenUtils
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class JwtTokenUtils {
 
-    public static String SECRET = "jwtsecret-yunwangtong";
-    public static String ISS = "yunwangtong";
+    public static String SECRET = "jwtsecret-xiyangyang";
+    public static String ISS = "xiyangyang";
 
-    // 过期时间是3600秒，既是1个小时
+    /**过期时间是3600秒，既是1个小时 */
     public static Long EXPIRATION = 3600L;
 
-    // 选择了记住我之后的过期时间为7天
+    /**选择了记住我之后的过期时间为7天 */
     public static Long EXPIRATION_REMEMBER = 604800L;
 
-    // 创建token
+    /**创建token */
     public static String createToken(String subject, Date date) {
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET)
@@ -38,12 +37,12 @@ public class JwtTokenUtils {
                 .compact();
     }
 
-    // 从token中获取用户
+    /**从token中获取用户 */
     public static String getSubject(String token) {
         return getTokenBody(token).getSubject();
     }
 
-    // 是否已过期
+    /**是否已过期 */
     public static Boolean isExpiration(String token) {
         return getTokenBody(token).getExpiration().before(new Date());
     }

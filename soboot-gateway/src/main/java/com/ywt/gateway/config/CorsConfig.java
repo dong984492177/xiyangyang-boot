@@ -30,7 +30,6 @@ import java.util.Set;
  * @Description: 解决跨域问题
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Configuration
 @Slf4j

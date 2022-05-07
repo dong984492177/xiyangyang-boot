@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Data
 @NoArgsConstructor
@@ -20,8 +19,6 @@ public class QueryUserListReqModel extends QueryModel {
     private String userName;
     @ApiModelProperty(value = "手机号", dataType = "String", required = false)
     private String phonenumber;
-//    @ApiModelProperty(value = "是否禁用", dataType = "String", required = false)
-//    private int isDelete=0;
     @ApiModelProperty(value = "开始时间", dataType = "String", required = false)
     private String beginTime;
     @ApiModelProperty(value = "结束时间", dataType = "String", required = false)

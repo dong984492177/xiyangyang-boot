@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -20,10 +19,9 @@ import java.util.List;
 
 /**
  * @Author: huangchaoyang
- * @Description:
+ * @Description:  security用户service
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Primary
 @Service
@@ -41,7 +39,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         if (users.size() == 0) {
             return null;
         }
-        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+
         return new User(JSON.toJSONString(users.get(0)), users.get(0).getPassword(), Collections.singletonList(new SimpleGrantedAuthority(ACTIVITI_ROLE)));
     }
 }

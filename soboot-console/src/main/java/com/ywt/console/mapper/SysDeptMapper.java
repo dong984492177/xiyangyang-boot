@@ -9,13 +9,9 @@ import com.ywt.console.models.resmodel.systemresmodels.QueryDeptListResModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+
 /**
- * <p>
- * 部门表 Mapper 接口
- * </p>
- *
- * @author xijun.shao
- * @since 2020-06-10
+ * 部门mapper
  */
 @Repository
 public interface SysDeptMapper extends BaseMapper<SysDept> {

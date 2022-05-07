@@ -13,10 +13,9 @@ import java.util.List;
 
 /**
  * @Author: huangchaoyang
- * @Description:
+ * @Description: 分类mapper
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Coyright: 云网通信息科技
  */
 @Repository
 public interface CategoryMapper extends BaseMapper<Category> {

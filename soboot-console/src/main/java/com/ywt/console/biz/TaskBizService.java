@@ -1,11 +1,14 @@
 package com.ywt.console.biz;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ywt.common.base.util.BeanMapping;
 import com.ywt.common.base.util.CoreDateUtils;
 import com.ywt.console.entity.UserTask;
 import com.ywt.console.entity.activiti.ActWorkflowFormData;
+import com.ywt.console.entity.activiti.TaskCheckDetail;
 import com.ywt.console.models.QueryModel;
+import com.ywt.console.models.UserPhoneToken;
 import com.ywt.console.models.activiti.HistoryTaskResModel;
 import com.ywt.console.models.activiti.TaskFormDataResModel;
 import com.ywt.console.models.reqmodel.UpdateUserTaskReqModel;
@@ -13,6 +16,7 @@ import com.ywt.console.models.reqmodel.activiti.ActFormDataReqModel;
 import com.ywt.console.models.resmodel.ActTaskResModel;
 import com.ywt.console.service.IActFlowFormDataService;
 import com.ywt.console.service.ISysUserService;
+import com.ywt.console.service.ITaskCheckDetailService;
 import com.ywt.console.service.IUserTaskService;
 import com.ywt.console.utils.Util;
 import org.activiti.api.process.model.ProcessInstance;
@@ -21,7 +25,6 @@ import org.activiti.api.process.model.payloads.StartProcessPayload;
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.runtime.shared.query.Page;
 import org.activiti.api.runtime.shared.query.Pageable;
-import org.activiti.api.runtime.shared.security.SecurityManager;
 import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
 import org.activiti.api.task.runtime.TaskRuntime;
@@ -29,14 +32,18 @@ import org.activiti.bpmn.model.FormProperty;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @Author: huangchaoyang
+ * @Description:
+ * @Version: 1.0
+ * @Create: 2022-05-03
+ */
 @Component
 public class TaskBizService {
 
@@ -60,6 +67,12 @@ public class TaskBizService {
 
     @Autowired
     private IActFlowFormDataService actFlowFormDataService;
+
+    @Autowired
+    private ITaskCheckDetailService taskCheckDetailService;
+
+    @Autowired
+    private MQBizService mqBizService;
 
     private static final String label = "radio";
 
@@ -107,11 +120,18 @@ public class TaskBizService {
         return iPage;
     }
 
+    /**
+     * 任务审核
+     * @param taskId
+     * @param reqModelList
+     * @return
+     */
     public Boolean applySave(String taskId,List<ActFormDataReqModel> reqModelList){
 
         Task task = taskRuntime.task(taskId);
         org.activiti.engine.runtime.ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
 
+        Boolean checkSuccess = false;
         Boolean hasVariables = false;
         HashMap<String, Object> variablesMap = new HashMap<String, Object>(10);
         //前端传来的字符串，拆分成每个控件
@@ -127,6 +147,9 @@ public class TaskBizService {
                     .build();
             if(label.equals(model.getControlType())){
                 Integer i = Integer.parseInt(controlValue);
+                if(0==i){
+                    checkSuccess = true;
+                }
                 actWorkflowFormData.setControlValue(model.getControlDefault().split("--__--")[i]);
             }else{
                 actWorkflowFormData.setControlValue(controlValue);
@@ -153,7 +176,19 @@ public class TaskBizService {
         }
 
         //保存
-        return actFlowFormDataService.saveBatch(formDataList);
+        boolean result = actFlowFormDataService.saveBatch(formDataList);
+        //添加任务日志记录
+        UserPhoneToken userPhoneToken = Util.getUserToken();
+        TaskCheckDetail taskCheckDetail = TaskCheckDetail.builder()
+                .checkTime(new Date())
+                .checkUserId(userPhoneToken.getUserId())
+                .taskId(taskId)
+                .status(checkSuccess?"1":"0")
+                .checkUserName(userPhoneToken.getUserName())
+                .build();
+        mqBizService.writeTaskDetailLog(JSON.toJSONString(taskCheckDetail));
+
+        return result;
     }
 
     /**

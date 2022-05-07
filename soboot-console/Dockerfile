@@ -18,12 +18,12 @@ RUN set -x \
     && ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo '$TIME_ZONE' > /etc/timezone \
     && yum clean all
 
-COPY yuquan-console.jar .
+COPY soboot-console.jar .
 COPY docker-entrypoint.sh .
 
 RUN mkdir -p logs \
 	&& cd logs \
-	&& touch xiot-console.log 
+	&& touch soboot-console.log
 RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 8000

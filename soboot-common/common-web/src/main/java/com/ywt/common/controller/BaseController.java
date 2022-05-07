@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
  * @Description: 控制器基础支持类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public abstract class BaseController {
     /**

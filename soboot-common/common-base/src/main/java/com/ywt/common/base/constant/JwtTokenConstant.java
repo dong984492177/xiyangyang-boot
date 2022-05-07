@@ -5,7 +5,6 @@ package com.ywt.common.base.constant;
  * @Description: token
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class JwtTokenConstant {
     public static final String TOKEN_HEADER = "Authorization";

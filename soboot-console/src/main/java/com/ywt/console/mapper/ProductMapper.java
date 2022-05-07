@@ -11,13 +11,9 @@ import com.ywt.console.models.resmodel.QueryProductResModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+
 /**
- * <p>
- * 产品表 Mapper 接口
- * </p>
- *
- * @author: xijun.shao
- * @Copyright:  Kuaizhu
+ * 产品mapper
  */
 @Repository
 public interface ProductMapper extends BaseMapper<Product> {

@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
  * @Description: 单路由，或组路由过滤器
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Configuration
 @Slf4j

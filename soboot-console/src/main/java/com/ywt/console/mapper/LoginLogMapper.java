@@ -10,6 +10,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+/**
+ * 登陆日志mapper
+ */
 @Repository
 public interface LoginLogMapper extends BaseMapper<LoginLog> {
 

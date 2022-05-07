@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
  * @Description: 字符串工具类
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 

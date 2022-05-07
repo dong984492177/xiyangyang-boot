@@ -1,7 +1,6 @@
 package com.ywt.common.config.mq;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -9,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @Description: mq属性配置
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Data
 @ConfigurationProperties(prefix = "rocketmq")

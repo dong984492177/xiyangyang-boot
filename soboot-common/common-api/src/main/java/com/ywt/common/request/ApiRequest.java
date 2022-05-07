@@ -16,7 +16,6 @@ import java.util.List;
  * @Description: 封装API请求对象供自定义查询使用 支持自定义字段的各种运算比较
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 @Slf4j
 public class ApiRequest implements Serializable {

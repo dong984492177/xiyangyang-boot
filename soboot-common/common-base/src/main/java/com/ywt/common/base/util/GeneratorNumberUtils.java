@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
  * @Description:
  * @Version: 1.0
  * @Create: 2021/1/12
- * @Copyright: 云网通信息科技
  */
 public class GeneratorNumberUtils {
 
@@ -71,7 +70,6 @@ public class GeneratorNumberUtils {
                 }
             }
             String result = buffer.toString();
-            System.out.println("加密字符串：" + result);
             return result;
         }
 
@@ -80,7 +78,6 @@ public class GeneratorNumberUtils {
          * */
         public String decrypt(String str,long time){
             if(null == str || "".equals(str)){
-                System.out.println("参数为空");
                 return null;
             }
             int l = CONFUSED_WORDS_KEY.length();
@@ -94,7 +91,6 @@ public class GeneratorNumberUtils {
             for(int i = 0; i < len; i++ ){
                 int k = CONVERT_KEY.indexOf(initArr[i]);
                 if(k == -1){
-                    System.out.println("转化失败：" + str);
                     return null;
                 }
                 result.append(k);
@@ -104,7 +100,6 @@ public class GeneratorNumberUtils {
                 long total = Long.parseLong(result.toString());
                 long sum = total/SECRET_KEY;
                 number = sum - time;
-                System.out.println("解密后数字：" + number);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 return null;
@@ -143,7 +138,6 @@ public class GeneratorNumberUtils {
         public static String encry(String str){
 
             if(!isNumber(str)){
-                System.out.println(str + "不是数字");
                 return null;
             }
 
@@ -171,12 +165,7 @@ public class GeneratorNumberUtils {
                         break;
                     }
                 }
-
-
             }
-
             return builder.toString();
         }
-
-
 }
