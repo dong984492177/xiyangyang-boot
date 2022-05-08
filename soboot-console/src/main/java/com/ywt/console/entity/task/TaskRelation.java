@@ -1,4 +1,4 @@
-package com.ywt.console.entity.activiti;
+package com.ywt.console.entity.task;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,7 +8,6 @@ import com.ywt.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -28,7 +27,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ApiModel(value="任务审核详情对象", description="任务审核详情表")
 @TableName("t_task_check_detail")
-public class TaskCheckDetail extends BaseEntity {
+public class TaskRelation extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     @ApiModelProperty("id")

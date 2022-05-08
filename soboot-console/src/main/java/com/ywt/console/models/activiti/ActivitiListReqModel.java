@@ -4,6 +4,8 @@ import com.ywt.console.models.QueryModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * @Author: huangchaoyang
  * @Description:
@@ -26,4 +28,10 @@ public class ActivitiListReqModel extends QueryModel {
 
     @ApiModelProperty(value = "版本", dataType = "string")
     private String version;
+
+    @ApiModelProperty(value = "开始时间", dataType = "date")
+    private Date startTime;
+
+    @ApiModelProperty(value = "结束时间", dataType = "date")
+    private Date endTime;
 }

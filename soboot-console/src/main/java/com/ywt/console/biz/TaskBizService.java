@@ -182,8 +182,8 @@ public class TaskBizService {
         TaskCheckDetail taskCheckDetail = TaskCheckDetail.builder()
                 .checkTime(new Date())
                 .checkUserId(userPhoneToken.getUserId())
-                .taskId(taskId)
                 .status(checkSuccess?"1":"0")
+                .processInstanceId(processInstance.getProcessInstanceId())
                 .checkUserName(userPhoneToken.getUserName())
                 .build();
         mqBizService.writeTaskDetailLog(JSON.toJSONString(taskCheckDetail));

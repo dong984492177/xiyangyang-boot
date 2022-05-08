@@ -1,13 +1,14 @@
-package com.ywt.common.controller;
+package com.ywt.console.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.ywt.common.base.util.CoreRequestUtils;
 import com.ywt.common.bean.ClientRequestContextHolder;
+import com.ywt.common.constant.AttributeKeyConstant;
+import com.ywt.common.controller.BaseController;
 import com.ywt.common.exception.*;
 import com.ywt.common.response.DefaultResponseDataWrapper;
-import com.ywt.common.constant.AttributeKeyConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Author: huangchaoyang
- * @Description:
- * web应用层全局异常处理者
- * controller中的异常最终都上抛到此处理器中
- * 此处理器应当按照客户端请求响应规范返回http status,等异常信息
+ * @Description: web应用层全局异常处理者
  * @Version: 1.0
  * @Create: 2021/1/12
  */
@@ -54,10 +52,10 @@ public class GlobalApiExceptionHandler extends BaseController {
 
     @ResponseBody
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<DefaultResponseDataWrapper> allExceptionHandler(Throwable throwable) {
+    public ResponseEntity<DefaultResponseDataWrapper<String>> allExceptionHandler(Throwable throwable) {
         // 进行异常分类和日志处理
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        String errorCode = "500000000";
+        String errorCode = "-1";
         String errorMsg = "未知错误";
         String errorDetail = null;
 
@@ -96,7 +94,7 @@ public class GlobalApiExceptionHandler extends BaseController {
                     errorDetail = JSON.toJSONString(detailItemList);
                 }
 
-                throw new ParameterNotValidException("400000001", "请求参数验证失败", throwable);
+                throw new ParameterNotValidException("810001", "请求参数验证失败", throwable);
             }
 
             if (throwable instanceof ParameterNotValidException) {
@@ -152,8 +150,8 @@ public class GlobalApiExceptionHandler extends BaseController {
 
         printError(e, errorCode, errorMsg, errorDetail);
 
-        DefaultResponseDataWrapper defaultResponseDataWrapper = new DefaultResponseDataWrapper();
-        defaultResponseDataWrapper.setCode(Integer.valueOf(errorCode));
+        DefaultResponseDataWrapper<String> defaultResponseDataWrapper = new DefaultResponseDataWrapper<>();
+        defaultResponseDataWrapper.setCode(Integer.parseInt(errorCode));
         defaultResponseDataWrapper.setMessage(errorMsg);
         defaultResponseDataWrapper.setTimestamp(new Date().getTime());
         return new ResponseEntity<>(defaultResponseDataWrapper, HttpStatus.OK);

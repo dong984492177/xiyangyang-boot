@@ -1,5 +1,6 @@
 package com.ywt.console.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -85,5 +86,13 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask> i
         wrapper.eq("id",id).set("state",state);
 
         return mapper.update(null,wrapper)>0;
+    }
+
+    @Override
+    public UserTask queryByInstanceId(String instanceId) {
+
+        QueryWrapper<UserTask> wrapper = new QueryWrapper<>();
+        wrapper.eq("instance_id",instanceId);
+        return mapper.selectOne(wrapper);
     }
 }

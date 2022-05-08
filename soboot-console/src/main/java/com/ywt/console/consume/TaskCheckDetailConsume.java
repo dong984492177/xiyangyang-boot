@@ -1,10 +1,13 @@
 package com.ywt.console.consume;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ywt.common.config.mq.AbstractRocketConsumer;
 import com.ywt.console.constant.TopicConstant;
+import com.ywt.console.entity.UserTask;
 import com.ywt.console.entity.activiti.TaskCheckDetail;
 import com.ywt.console.service.ITaskCheckDetailService;
+import com.ywt.console.service.IUserTaskService;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,9 @@ public class TaskCheckDetailConsume extends AbstractRocketConsumer {
     @Autowired
     private ITaskCheckDetailService taskCheckDetailService;
 
+    @Autowired
+    private IUserTaskService userTaskService;
+
     @Override
     public void init() {
         // 设置主题,标签与消费者标题
@@ -34,7 +40,9 @@ public class TaskCheckDetailConsume extends AbstractRocketConsumer {
         registerMessageListener((msgs, context) -> {
             msgs.forEach(msg -> {
                 TaskCheckDetail taskCheckDetail = JSONObject.parseObject(msg.getBody(), TaskCheckDetail.class);
-                logger.info("写任务处理详情开始入库,{}",msg.getBody());
+                logger.info("写任务处理详情开始入库,{}", JSON.toJSONString(taskCheckDetail));
+                UserTask userTask = userTaskService.queryByInstanceId(taskCheckDetail.getProcessInstanceId());
+                taskCheckDetail.setTaskId(userTask.getId());
                 taskCheckDetailService.save(taskCheckDetail);
                 logger.info("写任务处理详情入库成功");
             });

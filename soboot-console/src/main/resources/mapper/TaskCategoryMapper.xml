@@ -3,7 +3,7 @@
 <mapper namespace="com.ywt.console.mapper.TaskCategoryMapper">
 
     <sql id="taskSQL">
-        id, name, parent_id, sort, status,create_time createTime
+        id, name, parent_id,category_type_id, sort, status,create_time createTime
     </sql>
 
     <select id="findList" resultType="com.ywt.console.models.resmodel.TaskCategoryResModel">

@@ -139,7 +139,6 @@ public class TaskController extends BaseController {
         return parsePageModel(pageModel, iPage.getTotal(), iPage.getRecords(), responseModel);
     }
 
-
     /**
      * 更新任务
      * @param reqModel

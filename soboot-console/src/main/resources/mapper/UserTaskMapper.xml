@@ -11,17 +11,18 @@
         select <include refid="taskSQL"/>
         from t_user_task ut
         <where>
+            and is_delete = '0'
             <if test="null != param.taskCategoryId ">
                 and task_category_id = #{param.taskCategoryId}
             </if>
             <if test="null != param.state and param.state != '' ">
                 and state = #{param.state}
             </if>
-            <if test="null != param.startTime and param.startTime != '' ">
-                and start_time = #{param.startTime}
+            <if test="null != param.startTime">
+                and start_time &gt;= #{param.startTime}
             </if>
-            <if test="null != param.endTime and param.endTime != '' ">
-                and end_time = #{param.endTime}
+            <if test="null != param.endTime">
+                and end_time &lt;= #{param.endTime}
             </if>
             <if test="null != param.createBy and param.createBy != '' ">
                 and create_by = #{param.createBy}

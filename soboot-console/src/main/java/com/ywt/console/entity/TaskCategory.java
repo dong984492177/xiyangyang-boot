@@ -37,4 +37,7 @@ public class TaskCategory extends BaseEntity {
 
     @ApiModelProperty(value = "是否启用:1-是 0-否")
     private String status;
+
+    @ApiModelProperty(value = "分类所属类型id")
+    private String categoryTypeId;
 }

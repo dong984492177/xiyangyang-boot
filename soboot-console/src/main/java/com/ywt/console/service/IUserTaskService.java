@@ -52,4 +52,11 @@ public interface IUserTaskService extends IService<UserTask> {
      * @return
      */
     boolean updateUserTask(Integer id,String state);
+
+    /**
+     *
+     * @param instanceId
+     * @return
+     */
+    UserTask queryByInstanceId(String instanceId);
 }

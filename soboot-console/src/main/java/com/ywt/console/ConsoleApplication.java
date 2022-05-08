@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  * @Version: 1.0
  * @Create: 2021/1/12
  */
-@SpringBootApplication(scanBasePackages = {"com.ywt.console.*","com.ywt.common.config.*","com.ywt.common.config.mq.*"})
+@SpringBootApplication(scanBasePackages = {"com.ywt.console.*","com.ywt.common.config.*","com.ywt.common.*"})
 @MapperScan("com.ywt.console.mapper")
 @EnableAsync
 @EnableTransactionManagement

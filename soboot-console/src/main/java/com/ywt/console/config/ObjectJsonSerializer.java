@@ -11,7 +11,7 @@ import java.io.IOException;
  * @Version: 1.0
  * @Create: 2021/1/12
  */
-/*public class ObjectJsonSerializer extends JsonSerializer<Object> {
+public class ObjectJsonSerializer extends JsonSerializer<Object> {
     @Override
     public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         if (o == null) {
@@ -21,4 +21,4 @@ import java.io.IOException;
             jsonGenerator.writeObject(o);
         }
     }
-}*/
+}

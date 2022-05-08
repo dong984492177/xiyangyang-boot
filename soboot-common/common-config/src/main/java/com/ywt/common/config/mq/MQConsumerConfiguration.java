@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties({ RocketMQProperties.class })
-@ConditionalOnProperty(prefix = "rocketmq", value = "isEnable", havingValue = "true")
+@ConditionalOnProperty(prefix = "rocketmq", value = "isEnabled", havingValue = "true")
 public class MQConsumerConfiguration {
     private RocketMQProperties properties;
 
